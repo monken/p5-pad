@@ -67,7 +67,6 @@ sub import_tarball {
             }
         }
     }
-    warn Data::Dumper::Dumper $meta;
     if(keys %{$meta->provides} && (my $provides = $meta->provides)) {
         my @files = $release->files->all;
         while( my ($module,$data) = each %$provides ) {
@@ -86,12 +85,10 @@ sub import_tarball {
         }
         
         foreach my $file (@files) {
-        warn $basedir->file($file);
             my $info = Module::Build::ModuleInfo->new_from_file($basedir->file($file->name));
-            warn $info->packages_inside;
+            $release->create_related('modules', { file => $file, name => $_, version => $info->version($_)->stringify })
+                for($info->packages_inside);
         }
-        
-        warn Data::Dumper::Dumper [ map { $_->name } @files];
     }
     return $release;
 }
