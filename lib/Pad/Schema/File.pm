@@ -1,0 +1,23 @@
+package Pad::Schema::File;
+
+use MooseX::DBIC;
+
+has_column name   => ( required => 1 );
+has_column binary => ( isa => 'Bool', required => 1, default => 0 );
+has_column content => ( isa => 'ScalarRef[Str]', required => 1 );
+
+belongs_to 'release';
+
+__PACKAGE__->meta->make_immutable;
+
+__END__
+
+=head1 TODO
+
+=over 4
+
+=item B<Enable TOAST on content column>
+
+=item B<Full-text index only on non binary files>
+
+=back
