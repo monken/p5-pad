@@ -1,7 +1,7 @@
 {
-    'Model::DBIC': {
-        'connect_info': {
-            'dsn': 'dbi:SQLite::memory:'
+    "Model::DBIC": {
+        "connect_info": {
+            "dsn": "dbi:SQLite:sqlite.db"
         }
     }
 }

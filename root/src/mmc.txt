@@ -1,0 +1,193 @@
+<h1><a class='u' href='#___top' title='click to go to top of document'
+name="NAME"
+>NAME <img alt='^' src='http://st.pimg.net/tucs/img/up.gif'></a></h1>
+
+<p>Moose::Meta::Class - The Moose metaclass</p>
+
+<h1><a class='u' href='#___top' title='click to go to top of document'
+name="DESCRIPTION"
+>DESCRIPTION <img alt='^' src='http://st.pimg.net/tucs/img/up.gif'></a></h1>
+
+<p>This class is a subclass of <a href="/perldoc?Class%3A%3AMOP%3A%3AClass" class="podlinkpod"
+>Class::MOP::Class</a> that provides additional Moose-specific functionality.</p>
+
+<p>To really understand this class,
+you will need to start with the <a href="/perldoc?Class%3A%3AMOP%3A%3AClass" class="podlinkpod"
+>Class::MOP::Class</a> documentation.
+This class can be understood as a set of additional features on top of the basic feature provided by that parent class.</p>
+
+<h1><a class='u' href='#___top' title='click to go to top of document'
+name="INHERITANCE"
+>INHERITANCE <img alt='^' src='http://st.pimg.net/tucs/img/up.gif'></a></h1>
+
+<p><code>Moose::Meta::Class</code> is a subclass of <a href="/perldoc?Class%3A%3AMOP%3A%3AClass" class="podlinkpod"
+>Class::MOP::Class</a>.</p>
+
+<h1><a class='u' href='#___top' title='click to go to top of document'
+name="METHODS"
+>METHODS <img alt='^' src='http://st.pimg.net/tucs/img/up.gif'></a></h1>
+
+<dl>
+<dt><a name='Moose'></a><a name="Moose::Meta::Class-&#62;initialize($package_name,_%options)"
+><b>Moose::Meta::Class-&#62;initialize($package_name,
+%options)</b></a></dt>
+
+<dd>
+<p>This overrides the parent&#39;s method in order to provide its own defaults for the <code>attribute_metaclass</code>,
+<code>instance_metaclass</code>,
+and <code>method_metaclass</code> options.</p>
+
+<p>These all default to the appropriate Moose class.</p>
+
+<dt><a name='Moose'></a><a name="Moose::Meta::Class-&#62;create($package_name,_%options)"
+><b>Moose::Meta::Class-&#62;create($package_name,
+%options)</b></a></dt>
+
+<dd>
+<p>This overrides the parent&#39;s method in order to accept a <code>roles</code> option.
+This should be an array reference containing roles that the class does,
+each optionally followed by a hashref of options (<code>-excludes</code> and <code>-alias</code>).</p>
+
+<pre>  my $metaclass = Moose::Meta::Class-&#62;create( &#39;New::Class&#39;, roles =&#62; [...] );</pre>
+
+<dt><a name='Moose'></a><a name="Moose::Meta::Class-&#62;create_anon_class"
+><b>Moose::Meta::Class-&#62;create_anon_class</b></a></dt>
+
+<dd>
+<p>This overrides the parent&#39;s method to accept a <code>roles</code> option, just as <code>create</code> does.</p>
+
+<p>It also accepts a <code>cache</code> option. If this is true, then the anonymous class will be cached based on its superclasses and roles. If an existing anonymous class in the cache has the same superclasses and roles, it will be reused.</p>
+
+<pre>  my $metaclass = Moose::Meta::Class-&#62;create_anon_class(
+      superclasses =&#62; [&#39;Foo&#39;],
+      roles        =&#62; [qw/Some Roles Go Here/],
+      cache        =&#62; 1,
+  );</pre>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;make_immutable(%options)"
+><b>$metaclass-&#62;make_immutable(%options)</b></a></dt>
+
+<dd>
+<p>This overrides the parent&#39;s method to add a few options. Specifically, it uses the Moose-specific constructor and destructor classes, and enables inlining the destructor.</p>
+
+<p>Also, since Moose always inlines attributes, it sets the <code>inline_accessors</code> option to false.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;new_object(%params)"
+><b>$metaclass-&#62;new_object(%params)</b></a></dt>
+
+<dd>
+<p>This overrides the parent&#39;s method in order to add support for attribute triggers.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;add_override_method_modifier($name,_$sub)"
+><b>$metaclass-&#62;add_override_method_modifier($name, $sub)</b></a></dt>
+
+<dd>
+<p>This adds an <code>override</code> method modifier to the package.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;add_augment_method_modifier($name,_$sub)"
+><b>$metaclass-&#62;add_augment_method_modifier($name, $sub)</b></a></dt>
+
+<dd>
+<p>This adds an <code>augment</code> method modifier to the package.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;calculate_all_roles"
+><b>$metaclass-&#62;calculate_all_roles</b></a></dt>
+
+<dd>
+<p>This will return a unique array of <code>Moose::Meta::Role</code> instances which are attached to this class.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;add_role($role)"
+><b>$metaclass-&#62;add_role($role)</b></a></dt>
+
+<dd>
+<p>This takes a <a href="/~flora/Moose-1.01/lib/Moose/Meta/Role.pm" class="podlinkpod"
+>Moose::Meta::Role</a> object, and adds it to the class&#39;s list of roles. This <i>does not</i> actually apply the role to the class.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;role_applications"
+><b>$metaclass-&#62;role_applications</b></a></dt>
+
+<dd>
+<p>Returns a list of <a href="/~flora/Moose-1.01/lib/Moose/Meta/Role/Application/ToClass.pm" class="podlinkpod"
+>Moose::Meta::Role::Application::ToClass</a> objects, which contain the arguments to role application.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;add_role_application($application)"
+><b>$metaclass-&#62;add_role_application($application)</b></a></dt>
+
+<dd>
+<p>This takes a <a href="/~flora/Moose-1.01/lib/Moose/Meta/Role/Application/ToClass.pm" class="podlinkpod"
+>Moose::Meta::Role::Application::ToClass</a> object, and adds it to the class&#39;s list of role applications. This <i>does not</i> actually apply any role to the class; it is only for tracking role applications.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;does_role($role)"
+><b>$metaclass-&#62;does_role($role)</b></a></dt>
+
+<dd>
+<p>This returns a boolean indicating whether or not the class does the specified role. The role provided can be either a role name or a <a href="/~flora/Moose-1.01/lib/Moose/Meta/Role.pm" class="podlinkpod"
+>Moose::Meta::Role</a> object. This tests both the class and its parents.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;excludes_role($role_name)"
+><b>$metaclass-&#62;excludes_role($role_name)</b></a></dt>
+
+<dd>
+
+<p>A class excludes a role if it has already composed a role which excludes the named role. This tests both the class and its parents.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;add_attribute($attr_name,_%params|$params)"
+><b>$metaclass-&#62;add_attribute($attr_name, %params|$params)</b></a></dt>
+
+<dd>
+<p>This overrides the parent&#39;s method in order to allow the parameters to be provided as a hash reference.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;constructor_class_($class_name)"
+><b>$metaclass-&#62;constructor_class ($class_name)</b></a></dt>
+
+<dd>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;destructor_class_($class_name)"
+><b>$metaclass-&#62;destructor_class ($class_name)</b></a></dt>
+
+<dd>
+<p>These are the names of classes used when making a class immutable. These default to <a href="/~flora/Moose-1.01/lib/Moose/Meta/Method/Constructor.pm" class="podlinkpod"
+>Moose::Meta::Method::Constructor</a> and <a href="/~flora/Moose-1.01/lib/Moose/Meta/Method/Destructor.pm" class="podlinkpod"
+>Moose::Meta::Method::Destructor</a> respectively. These accessors are read-write, so you can use them to change the class name.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;error_class($class_name)"
+><b>$metaclass-&#62;error_class($class_name)</b></a></dt>
+
+<dd>
+<p>The name of the class used to throw errors. This defaults to <a href="/~flora/Moose-1.01/lib/Moose/Error/Default.pm" class="podlinkpod"
+>Moose::Error::Default</a>, which generates an error with a stacktrace just like <code>Carp::confess</code>.</p>
+
+<dt><a name='metaclass'></a><a name="$metaclass-&#62;throw_error($message,_%extra)"
+><b>$metaclass-&#62;throw_error($message, %extra)</b></a></dt>
+
+<dd>
+<p>Throws the error created by <code>create_error</code> using <code>raise_error</code></p>
+
+</dd>
+</dl>
+
+<h1><a class='u' href='#___top' title='click to go to top of document'
+name="BUGS"
+>BUGS <img alt='^' src='http://st.pimg.net/tucs/img/up.gif'></a></h1>
+
+<p>See <a href="/~flora/Moose-1.01/lib/Moose.pm#BUGS" class="podlinkpod"
+>&#34;BUGS&#34; in Moose</a> for details on reporting bugs.</p>
+
+<h1><a class='u' href='#___top' title='click to go to top of document'
+name="AUTHOR"
+>AUTHOR <img alt='^' src='http://st.pimg.net/tucs/img/up.gif'></a></h1>
+
+<p>Stevan Little &#60;stevan@iinteractive.com&#62;</p>
+
+<h1><a class='u' href='#___top' title='click to go to top of document'
+name="COPYRIGHT_AND_LICENSE"
+>COPYRIGHT AND LICENSE <img alt='^' src='http://st.pimg.net/tucs/img/up.gif'></a></h1>
+
+<p>Copyright 2006-2010 by Infinity Interactive, Inc.</p>
+
+<p><a href="http://www.iinteractive.com" class="podlinkurl"
+>http://www.iinteractive.com</a></p>
+
+<p>This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.</p>
+
+</div>

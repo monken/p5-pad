@@ -28,8 +28,8 @@ sub import_tarball {
                 { 
                   name => $relative->as_foreign('Unix')->stringify, 
                   binary => -B $child ? 1 : 0,
-                  content => \1
-                  #content => \(scalar $child->slurp)
+                  #content => \1
+                  content => \(scalar $child->slurp)
                 } );
         } elsif($child->is_dir) {
             push(@children, $child->children);

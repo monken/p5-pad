@@ -4,7 +4,6 @@ extends 'Catalyst';
 
 __PACKAGE__->config(
     name => 'pad_web',
-    #'Plugin::ConfigLoader' => { file => 'pad_web.json' }
 );
 
 __PACKAGE__->setup(qw(

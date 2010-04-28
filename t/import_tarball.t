@@ -7,8 +7,7 @@ use Pad::Schema;
 my $schema = Pad::Schema->connect('dbi:SQLite::memory:');
 $schema->deploy;
 
-SKIP: {
-    skip('for now');
+{
     my $release = $schema->resultset('Release')->import_tarball('t/var/Path-Class-0.18.tar.gz');
     is( $release->files->count, 15 );
     is( $release->dependencies->count, 11 );
