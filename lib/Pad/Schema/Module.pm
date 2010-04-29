@@ -4,7 +4,7 @@ use MooseX::DBIC;
 use version;
 use PPI;
 use Pod::POM;
-use Pod::POM::View::HTML;
+use Catalyst::Controller::POD::POM::View;
 
 
 has_column name => ( required => 1 );
@@ -32,7 +32,7 @@ sub _build_pod {
 
 sub _build_pod_html {
     my $pod = shift->pod;
-    return Pod::POM::View::HTML->print( Pod::POM->new( warn => 0 )->parse_text( $pod ) );
+    return Catalyst::Controller::POD::POM::View->print( Pod::POM->new( warn => 0 )->parse_text( $pod ) );
 }
 
 sub _build_code {

@@ -1,7 +1,7 @@
 Role('Pad.Reader.Role.TOC', {
     after: {
         afterRender: function() {
-            return;
+            //return;
             console.log(this);
             this.tbar.insertHTML('afterEnd', '<div class="x-toolbar pad-toc-container" id="pad-toc-container"><div class="pad-toc-tree" id="pad-toc-tree"></div>T<br>O<br>C<div class="pad-toc-tool" id="pad-toc-tool"></div></div>');
             var button = new Ext.Button({

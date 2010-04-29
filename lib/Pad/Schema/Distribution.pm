@@ -9,6 +9,10 @@ has_column [qw(pass fail na unknown)] => ( isa => 'Int', default => 0 );
 has_many releases => ( isa => ResultSet['Pad::Schema::Release'] );
 
 
+sub latest_release {
+    return shift->search_related('releases', undef, { order_by => { -desc => 'version_numified' } })->first;
+}
+
 __PACKAGE__->meta->make_immutable;
 
 __END__

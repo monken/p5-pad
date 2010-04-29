@@ -18,10 +18,10 @@ Ext.onReady(function(){
         items:[{
             xtype:'portal',
             region:'west',
-                width: 200,
+            width: 200,
             items:[{
                 style:'padding:10px',
-                columnWidth:1,
+                width:200,
                 items:[{
                     title: 'Welcome',
                     tools: tools,
@@ -134,12 +134,12 @@ Ext.onReady(function(){
                                 html: 'foo'
                             }]
                     }]
-            },{xtype:'portal',
+            },{
+            xtype:'portal',
             region:'east',
             width: 200,
-            bodyStyle: 'background-color: #e8f0Fe',
             items:[{
-                columnWidth:1,
+                width:200,
                 style:'padding:10px',
                 items:[{
                     title: 'Browse Distribution',
@@ -147,17 +147,13 @@ Ext.onReady(function(){
                     iconCls: 'silk-bricks',
                     items: new Ext.tree.TreePanel({
                          autoScroll:true,
-                         rootVisible: true,
+                         rootVisible: false,
                          listeners: {
                             'render': function(tree){new Ext.tree.TreeSorter(tree, {folderSort: true})}
                          },
+                         dataUrl: '/distribution/Path-Class/files',
                          root:{ id:'root',
-                         text:'Moose',
                          expanded:true,
-                         children: [{text: 't'},{text: 'lib'},
-                            {text: 'Makefile.PL', leaf:true},
-                            {text: 'README', leaf:true},
-                            {text: 'META.yml', leaf:true}]
                          }})
                 },{
                     title: 'Related Modules',

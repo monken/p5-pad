@@ -7,6 +7,7 @@ has_column binary => ( isa => 'Bool', required => 1, default => 0 );
 has_column content => ( isa => 'ScalarRef[Str]', required => 1 );
 
 belongs_to 'release';
+might_have module => ( isa => 'Pad::Schema::Module', predicate => 'has_module' );
 
 __PACKAGE__->meta->make_immutable;
 

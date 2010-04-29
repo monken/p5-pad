@@ -7,8 +7,8 @@ use Archive::Extract  ();
 use File::Temp        ();
 use CPAN::Meta        ();
 use DateTime          ();
-use List::Util      qw(first);
-use Module::Build::ModuleInfo;
+use List::Util        ();
+use Module::Build::ModuleInfo ();
 
 sub import_tarball {
     my ($self, $tarball) = @_;
@@ -70,7 +70,7 @@ sub import_tarball {
     if(keys %{$meta->provides} && (my $provides = $meta->provides)) {
         my @files = $release->files->all;
         while( my ($module,$data) = each %$provides ) {
-            $data->{file} = first { $_->name eq $data->{file} } @files;
+            $data->{file} = List::MoreUtils::first { $_->name eq $data->{file} } @files;
             $release->create_related('modules', { name => $module, %$data });
         }
     } elsif(my $no_index = $meta->no_index) {
