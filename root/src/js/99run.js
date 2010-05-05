@@ -2,6 +2,9 @@
 Ext.BLANK_IMAGE_URL = '/static/extjs/images/default/s.gif';
 
 Ext.onReady(function(){
+
+    Ext.Direct.addProvider(Ext.app.REMOTING_API);
+
     Ext.QuickTips.init();
 
     var tools = [{
@@ -95,39 +98,11 @@ Ext.onReady(function(){
                     {
                         xtype: 'tabpanel', 
                         style:'padding:10px 0px 10px 0px',
+                        id: 'pad-reader',
                         bbar:[{}],
                         activeItem: 0, 
                         plain: true,
-                        items: [{
-                                title: 'Path::Class::Dir',
-                                autoLoad: '/module/Path::Class::Dir',
-                                autoScroll: true,
-                                iconCls: 'silk-package',
-                                padding: '5px 5px 5px 25px',
-                                trait: Pad.Reader.Role.TOC,
-                                listeners: {
-                                    'afterrender': function(tab){ 
-                                        tab.tabEl.dd = new Ext.dd.DragSource(tab.tabEl, { ddGroup: 'group', 
-                                            dropEl: tab,
-                                            onMouseUp: function(e) {
-                                                if(!this.dropEl.isVisible()){
-                                                    this.dropEl.show();
-                                                }
-                                            }
-                                        });
-
-                                    }
-                                },
-                                tbar: [
-                                {iconCls: 'silk-star',enableToggle:true, tooltip: 'Add to favorites'},
-                                '->',
-                                {iconCls:'silk-page-white-code', text: 'Source Code', enableToggle: true},
-                                {iconCls:'silk-bug', text: 'Report Bug'},
-                                {iconCls:'silk-award-gold', text: 'Rate Distribution'},
-                                {iconCls:'silk-wrench', text: 'Tools', menu: [{text:'Diff Releases'},{text:'Grep Release'}]},
-                                {iconCls:'silk-printer',tooltip:'Print document'}
-                                ],
-                            },{
+                        items: [new Pad.Reader.Pod({title: 'Path::Class::Dir'}), {
                                 title: 'Results for "catalyst dispatch"',
                                 closable: true,
                                 iconCls: 'silk-magnifier',
@@ -145,16 +120,7 @@ Ext.onReady(function(){
                     title: 'Browse Distribution',
                     tools: tools,
                     iconCls: 'silk-bricks',
-                    items: new Ext.tree.TreePanel({
-                         autoScroll:true,
-                         rootVisible: false,
-                         listeners: {
-                            'render': function(tree){new Ext.tree.TreeSorter(tree, {folderSort: true})}
-                         },
-                         dataUrl: '/distribution/Path-Class/files',
-                         root:{ id:'root',
-                         expanded:true,
-                         }})
+                    items: new Pad.Distribution.Files({ distribution: 'Path-Class' })
                 },{
                     title: 'Related Modules',
                     tools: tools,
