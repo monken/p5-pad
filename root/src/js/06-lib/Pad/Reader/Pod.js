@@ -25,13 +25,13 @@ Pad.Reader.Pod = Ext.extend(Pad.Reader, {
         var that = this;
         Module.pod(this.title, function(prov, res) {
             that.body.insertHtml('afterBegin', res.result.html);
-            this.toc.tree.root.appendChild(res.result.toc);
+            that.toc.tree.root.appendChild(res.result.toc);
         });
-        console.log(this.toc);
-        this.toc.render(this.body);
+        this.toc.render(this.tbar);
     },
     afterRender: function(tab,foo) {
         Pad.Reader.Pod.superclass.afterRender.call(this, tab);
+        
         this.tabEl.dd = new Ext.dd.DragSource(this.tabEl, { ddGroup: 'group', 
         dropEl: this,
         onMouseUp: function(e) {

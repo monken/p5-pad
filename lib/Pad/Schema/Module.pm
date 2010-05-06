@@ -5,8 +5,8 @@ use version;
 use PPI;
 use Pod::POM;
 use Pod::POM::View::TOC;
+use Pod::POM::View::Pad;
 use List::MoreUtils qw(uniq);
-use Catalyst::Controller::POD::POM::View;
 
 
 has_column name => ( required => 1 );
@@ -39,7 +39,7 @@ sub _build_pod {
 
 sub _build_pod_html {
     my $pod = shift->pod;
-    return Catalyst::Controller::POD::POM::View->print( Pod::POM->new( warn => 0 )->parse_text( $pod ) );
+    return Pod::POM::View::Pad->print( Pod::POM->new( warn => 0 )->parse_text( $pod ) );
 }
 
 sub _build_code {
@@ -50,7 +50,7 @@ sub _build_code {
 
 sub _build_toc {
 	my $self = shift;
-	my $toc = Pod::POM::View::TOC->print( Pod::POM->new( warn => 0 ) )->parse_text( $self->pod );
+	my $toc = Pod::POM::View::TOC->print( Pod::POM->new( warn => 0 )->parse_text( $self->pod ) );
 	return _toc_to_json( [], split( /\n/, $toc ) );
 }
 

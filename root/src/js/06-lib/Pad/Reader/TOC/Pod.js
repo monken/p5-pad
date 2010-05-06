@@ -4,9 +4,9 @@ Pad.Reader.TOC.Pod = Ext.extend(Ext.Container, {
     afterRender: function(el) {
         //Pad.Reader.TOC.Pod.superclass.call(this, el);
         //console.log(el, this);
-        el.insertHtml('afterBegin', '<div class="x-toolbar pad-toc-container" id="pad-toc-container"><div class="pad-toc-tree" id="pad-toc-tree"></div>T<br>O<br>C<div class="pad-toc-tool" id="pad-toc-tool"></div></div>');
+        el.insertHtml('afterBegin', '<div class="x-toolbar pad-toc-container"><div class="pad-toc-tree"></div>T<br>O<br>C<div class="pad-toc-tool"></div></div>');
         var button = new Ext.Button({
-            renderTo: 'pad-toc-tool',
+            renderTo: el.child('.pad-toc-tool'),
             iconCls: 'silk-control-play',
             enableToggle: true,
             tooltip: 'Remain expanded'
@@ -16,18 +16,15 @@ Pad.Reader.TOC.Pod = Ext.extend(Ext.Container, {
              autoScroll:true,
              rootVisible: false,
              height: 150,
-             renderTo: 'pad-toc-tree',
+             renderTo: el.child('.pad-toc-tree'),
              root:{ id:'root',
              text:'Moose',
              expanded:true,
-             children: [
-                {text: 'NAME', leaf:true},
-                {text: 'SYNOPSIS', leaf:true},
-                {text: 'DESCRIPTION', leaf:true}]
+             children: []
         }});
         var treeWidth = this.tree.getWidth() + 2;
         
-        var toc = Ext.get('pad-toc-container');
+        var toc = el.child('.pad-toc-container');
         console.log(toc);
         var x = toc.getX() - treeWidth;
         toc.setX(x);
