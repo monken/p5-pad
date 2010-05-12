@@ -17,7 +17,7 @@ Ext.onReady(function(){
     var viewport = new Ext.Viewport({
         layout:'border',
         frame: false,
-        defaults: { bodyStyle: 'background-color: #e8f0Fe', border: false },
+        defaults: { bodyStyle: 'background-color: #e8f0Fe;', bodyCssClass: 'pad-no-scroll-x', border: false, autoScroll: false },
         items:[{
             xtype:'portal',
             region:'west',
@@ -99,10 +99,11 @@ Ext.onReady(function(){
                         xtype: 'tabpanel', 
                         style:'padding:10px 0px 10px 0px',
                         id: 'pad-reader',
+                        enableTabScroll: true,
                         bbar:[{}],
                         activeItem: 0, 
                         plain: true,
-                        items: [new Pad.Reader.Pod({title: 'Path::Class::Dir'}), {
+                        items: [new Pad.Reader.Source({title: 'PPI::Document'}), {
                                 title: 'Results for "catalyst dispatch"',
                                 closable: true,
                                 iconCls: 'silk-magnifier',
@@ -120,7 +121,7 @@ Ext.onReady(function(){
                     title: 'Browse Distribution',
                     tools: tools,
                     iconCls: 'silk-bricks',
-                    items: new Pad.Distribution.Files({ distribution: 'Path-Class' })
+                    items: new Pad.Distribution.Files({ distribution: 'PPI' })
                 },{
                     title: 'Related Modules',
                     tools: tools,

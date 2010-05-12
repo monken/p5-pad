@@ -6,31 +6,21 @@ use base "Pod::POM::View::HTML";
 
 my $HTML_PROTECT = 1;
 
-sub _root {
-    no strict 'refs';
+sub root {
     my $self = shift;
     if(@_) {
-        $self->{_root} = $_[0];
+        $self->{root} = $_[0];
     }
-    return $self->{_root};
+    return $self->{root};
 }
 
 
-sub _module {
-    no strict 'refs';
+sub module {
     my $self = shift;
     if(@_) {
-        $self->{_module} = $_[0];
+        $self->{module} = $_[0];
     }
-    return $self->{_module};
-}
-sub _toc {
-    no strict 'refs';
-    my $self = shift;
-    if(@_) {
-        $self->{_toc} = $_[0];
-    }
-    return $self->{_toc};
+    return $self->{module};
 }
 
 sub view_begin {
@@ -44,8 +34,7 @@ sub view_begin {
 
 sub view_pod {
     my ($self, $pod) = @_;
-    my $toc = $self->_toc;
-    my $permalink = $self->_root . "?permalink=" . $self->_module; # There has to be a better way
+    my $permalink = $self->root . "?permalink=" . $self->module; # There has to be a better way
     return qq~
 <div id="permalink"><a href="$permalink">Permalink</a></div>
 <div class="pod">
@@ -82,7 +71,7 @@ sub view_verbatim {
 
 sub view_seq_link_transform_path {
     my($self,$page) = @_;
-    return $self->_root."/module/$page";  
+    return $self->root."/module/$page";  
 }
 { 
     no warnings 'redefine';
@@ -100,10 +89,10 @@ sub view_seq_link_transform_path {
 sub view_head1 {
     my ($self, $head1) = @_;
     my $title = $head1->title->present($self);
-    my $id = "section-".$self->_module."-".$title;
+    my $id = "section-".$self->module."-".$title;
     $id =~ s/<.*?>//g;
     $id =~ s/'/\\'/g;
-    return "<h1 id='$id'>$title</h1>\n\n"
+    return "<a name='$id'></a><h1>$title</h1>\n\n"
         . $head1->content->present($self);
 }
 
@@ -111,10 +100,10 @@ sub view_head1 {
 sub view_head2 {
     my ($self, $head2) = @_;
     my $title = $head2->title->present($self);
-    my $id = "section-".$self->_module."-".$title;
+    my $id = "section-".$self->module."-".$title;
     $id =~ s/<.*?>//g;
     $id =~ s/'/\\'/g;
-    return "<h2 id='$id'>$title</h2>\n\n"
+    return "<a name='$id'></a><h2 id='$id'>$title</h2>\n\n"
         . $head2->content->present($self);
 }
 
@@ -122,10 +111,10 @@ sub view_head2 {
 sub view_head3 {
     my ($self, $head3) = @_;
     my $title = $head3->title->present($self);
-    my $id = "section-".$self->_module."-".$title;
+    my $id = "section-".$self->module."-".$title;
     $id =~ s/<.*?>//g;
     $id =~ s/'/\\'/g;
-    return "<h3 id='$id'>$title</h3>\n\n"
+    return "<a name='$id'></a><h3 id='$id'>$title</h3>\n\n"
         . $head3->content->present($self);
 }
 
@@ -133,10 +122,10 @@ sub view_head3 {
 sub view_head4 {
     my ($self, $head4) = @_;
     my $title = $head4->title->present($self);
-    my $id = "section-".$self->_module."-".$title;
+    my $id = "section-".$self->module."-".$title;
     $id =~ s/<.*?>//g;
     $id =~ s/'/\\'/g;
-    return "<h4 id='$id'>$title</h4>\n\n"
+    return "<a name='$id'></a><h4 id='$id'>$title</h4>\n\n"
         . $head4->content->present($self);
 }
 

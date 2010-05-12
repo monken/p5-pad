@@ -5,6 +5,7 @@ Pad.Reader.TOC.Pod = Ext.extend(Ext.Container, {
         //Pad.Reader.TOC.Pod.superclass.call(this, el);
         //console.log(el, this);
         el.insertHtml('afterBegin', '<div class="x-toolbar pad-toc-container"><div class="pad-toc-tree"></div>T<br>O<br>C<div class="pad-toc-tool"></div></div>');
+        this.el = el.child('.pad-toc-container');
         var button = new Ext.Button({
             renderTo: el.child('.pad-toc-tool'),
             iconCls: 'silk-control-play',
@@ -24,10 +25,10 @@ Pad.Reader.TOC.Pod = Ext.extend(Ext.Container, {
         }});
         var treeWidth = this.tree.getWidth() + 2;
         
+        this.getEl().alignTo(this.body, 'tl-tl');
         var toc = el.child('.pad-toc-container');
-        console.log(toc);
         var x = toc.getX() - treeWidth;
-        toc.setX(x);
+        this.el.setX(x);
         
         
         

@@ -1,0 +1,133 @@
+.pad-toc-container {
+    width: 200px;
+    height: 150px;
+    border-width: 0px 1px 1px 0px !important;
+    position: absolute;
+    text-align: center;
+    color:#15428B;
+    font-weight:bold;
+    z-index: 2000;
+}
+.pad-toc-tree {
+    background-color: #fff;
+    height: 150px;
+    width: 180px;
+    float: left;
+    text-align: left;
+}
+.pad-toc-container .pad-toc-tool {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+.highlight div, .line-numbers div {
+    height: 16px
+}
+
+.highlight div {
+    font-size: 11px
+}
+
+.line-numbers div {
+    text-align: right;
+    color: #999
+}
+
+.highlight, .line-numbers {
+    padding: 0px 4px 0px 4px;
+    padding-top: 5px;
+}
+
+.line-numbers {
+    border-width: 0px 1px 0px 0px;
+    margin-right: 5px
+}
+
+.pad-reader-source-table td {
+    vertical-align: top;
+}
+
+.pad-browser-source-highlight-alert {
+    color: #00f
+}
+
+.pad-browser-source-highlight-basen {
+    color: #007f00
+}
+
+.pad-browser-source-highlight-bstring {
+    color: #c9a7ff
+}
+
+.pad-browser-source-highlight-char {
+    color: #f0f
+}
+
+.pad-browser-source-highlight-comment {
+    color: #7f7f7f
+}
+
+.pad-browser-source-highlight-datatype {
+    color: #66c
+}
+
+.pad-browser-source-highlight-decval {
+    color: #00007f
+}
+
+.pad-browser-source-highlight-error {
+    color: #f00
+}
+
+.pad-browser-source-highlight-float {
+    color: #00007f
+}
+
+.pad-browser-source-highlight-function {
+    color: #007f00
+}
+
+.pad-browser-source-highlight-istring {
+    color: #f99
+}
+
+.pad-browser-source-highlight-keyword {
+    font-weight: bold
+}
+
+.pad-browser-source-highlight-normal {
+
+}
+
+.pad-browser-source-highlight-operator {
+    color: #ffa500
+}
+
+.pad-browser-source-highlight-regionmarker {
+    color: #96b9ff
+}
+
+.pad-browser-source-highlight-others {
+    color: #b03060
+}
+
+.pad-browser-source-highlight-reserved {
+    color: #9b30ff
+}
+
+.pad-browser-source-highlight-string {
+    color: #c00
+}
+
+.pad-browser-source-highlight-variable {
+    color: #66c
+}
+
+.pad-browser-source-highlight-warning {
+    color: #00f
+}
+
+.pad-no-scroll-x {
+    overflow: auto;
+    overflow-x: hidden;
+}

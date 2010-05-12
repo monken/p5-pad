@@ -4,7 +4,8 @@ use warnings;
 
 use Pad::Schema;
 
-my $schema = Pad::Schema->connect('dbi:SQLite::memory:');
+unlink('t/var/sqlite.db') if(-e 't/var/sqlite.db');
+my $schema = Pad::Schema->connect('dbi:SQLite:t/var/sqlite.db');
 $schema->deploy;
 
 {
@@ -22,5 +23,7 @@ $schema->deploy;
     is( $release->modules->count, 1 );
     is( $release->distribution->releases->count, 1 );
 }
+
+my $release = $schema->resultset('Release')->import_tarball('t/var/PPI-1.212.tar.gz');
 
 done_testing;

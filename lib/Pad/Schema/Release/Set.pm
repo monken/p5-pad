@@ -9,6 +9,7 @@ use CPAN::Meta        ();
 use DateTime          ();
 use List::Util        ();
 use Module::Build::ModuleInfo ();
+use File::stat ();
 
 sub import_tarball {
     my ($self, $tarball) = @_;
@@ -28,6 +29,7 @@ sub import_tarball {
                 { 
                   name => $relative->as_foreign('Unix')->stringify, 
                   binary => -B $child ? 1 : 0,
+                  stat => File::stat::stat($child),
                   #content => \1
                   content => \(scalar $child->slurp)
                 } );
@@ -69,9 +71,9 @@ sub import_tarball {
     }
     if(keys %{$meta->provides} && (my $provides = $meta->provides)) {
         my @files = $release->files->all;
-        while( my ($module,$data) = each %$provides ) {
-            $data->{file} = List::MoreUtils::first { $_->name eq $data->{file} } @files;
-            $release->create_related('modules', { name => $module, %$data });
+        while( my ($module, $data) = each %$provides ) {
+            $data->{file} = List::Util::first {  $_->name eq $data->{file} } @files;
+            $release->create_related('modules', { %$data, name => $module });
         }
     } elsif(my $no_index = $meta->no_index) {
         my @files = grep { $_->name =~ /\.pm$/ } $release->files->all;
@@ -86,7 +88,7 @@ sub import_tarball {
         
         foreach my $file (@files) {
             my $info = Module::Build::ModuleInfo->new_from_file($basedir->file($file->name));
-            $release->create_related('modules', { file => $file, name => $_, version => $info->version($_)->stringify })
+            $release->create_related('modules', { file => $file, name => $_, version => $info->version($_) ? $info->version($_)->stringify : undef })
                 for($info->packages_inside);
         }
     }

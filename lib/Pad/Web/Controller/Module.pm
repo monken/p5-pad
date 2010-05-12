@@ -7,6 +7,8 @@ __PACKAGE__->config(
     actions => {
         module => { Chained => '/', PathPart => 'module', CaptureArgs => 1 },
         pod => { Chained => 'module', PathPart => 'pod', Args => 0, Direct => undef },
+        code => { Chained => 'module', PathPart => 'code', Args => 0, Direct => undef },
+        end => { Private => undef }
     }
 );
 
@@ -21,6 +23,28 @@ sub pod {
     my $module = $c->stash->{module};
     $c->stash->{json} = { html => $module->pod_html, toc => $module->toc };
     $c->forward($c->view('JSON'));
+}
+
+sub code {
+    my ($self, $c) = @_;
+    my $module = $c->stash->{module};
+    $c->stash->{json} = { 
+        html => $module->code_html, 
+        sloc => $module->sloc, 
+        size => $module->file->size, 
+        pod_lines => $module->pod_lines
+    };
+    $c->forward($c->view('JSON'));
+}
+
+sub end {
+    my ($self, $c) = @_;
+    if($c->req->looks_like_browser) {
+        $c->res->body($c->stash->{json}->{html});
+        $c->res->content_type('text/html');
+    } else { 
+        $c->forward($c->view('JSON'));
+    }
 }
 
 __PACKAGE__->meta->make_immutable;

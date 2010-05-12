@@ -11,9 +11,7 @@ my $schema = Pad::Schema->connect('dbi:SQLite:t/var/sqlite.db');
         my $module = 
             $schema->resultset("Module")->search({ name => 'Path::Class::File'})->first,
         'Get module');
-    print $module->file->content;
-    print $module->code;
-    print $module->pod;
+    use Data::Dumper; $Data::Dumper::Indent = 1; $Data::Dumper::Maxdepth = 2; warn Dumper $module->pod_lines;
 }
 
 done_testing;

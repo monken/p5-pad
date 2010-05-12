@@ -6,7 +6,8 @@ Pad.Distribution.Files = Ext.extend(Ext.tree.TreePanel, {
     initComponent: function() {
         Ext.apply(this, { root: {
             id: this.distribution,
-            expanded: true
+            expanded: true,
+            //listeners: { append: this.onLoad }
         } });
         this.on('click', this.onClick);
         Pad.Distribution.Files.superclass.initComponent.call(this, arguments);
@@ -18,6 +19,10 @@ Pad.Distribution.Files = Ext.extend(Ext.tree.TreePanel, {
     onRender: function(tree) {
         Pad.Distribution.Files.superclass.onRender.call(this, tree);
         new Ext.tree.TreeSorter(this, {folderSort: true});
+    },
+    onLoad: function(tree, node) {
+        console.log(node, 1);
+        node.firstChild.expand();
     },
     onClick: function(node) {
         if(node.attributes.module) {
