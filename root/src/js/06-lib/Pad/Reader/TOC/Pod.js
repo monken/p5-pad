@@ -12,38 +12,37 @@ Pad.Reader.TOC.Pod = Ext.extend(Ext.Container, {
             enableToggle: true,
             tooltip: 'Remain expanded'
         });
-        
+
         this.tree = new Ext.tree.TreePanel({
-             autoScroll:true,
-             rootVisible: false,
-             height: 150,
-             renderTo: el.child('.pad-toc-tree'),
-             root:{ id:'root',
-             text:'Moose',
-             expanded:true,
-             children: []
-        }});
+            autoScroll: true,
+            rootVisible: false,
+            height: 150,
+            renderTo: el.child('.pad-toc-tree'),
+            root: {
+                id: 'root',
+                text: 'Moose',
+                expanded: true,
+                children: []
+            }
+        });
         var treeWidth = this.tree.getWidth() + 2;
-        
+
         this.getEl().alignTo(this.body, 'tl-tl');
         var toc = el.child('.pad-toc-container');
         var x = toc.getX() - treeWidth;
         this.el.setX(x);
-        
-        
-        
-        var opts = { };
+
+        var opts = {};
         var mouseenter = function(e, tab) {
-            if(opts.anim && opts.anim.isAnimated) return;
+            if (opts.anim && opts.anim.isAnimated) return;
             toc.setX(x + treeWidth, opts);
         };
-        var mouseleave = function(e, tab, opt){
-            if(opts.anim && opts.anim.isAnimated || button.pressed) return;
+        var mouseleave = function(e, tab, opt) {
+            if (opts.anim && opts.anim.isAnimated || button.pressed) return;
             toc.setX(x, opts);
         }
 
         toc.on('mouseenter', mouseenter);
         toc.on('mouseleave', mouseleave);
     }
-}
-);
+});
