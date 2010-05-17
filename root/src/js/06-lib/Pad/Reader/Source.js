@@ -17,6 +17,8 @@ Pad.Reader.Source = Ext.extend(Pad.Reader, {
     onRender: function(tab) {
         Pad.Reader.Pod.superclass.onRender.call(this, tab);
         var that = this;
+        var iconCls = this.iconCls;
+        this.setIconClass('silk-loading');
         Module.code(this.title, function(prov, res) {
             that.body.insertHtml('afterBegin', res.result.html);
             that.podLines = res.result.pod_lines;
@@ -33,6 +35,7 @@ Pad.Reader.Source = Ext.extend(Pad.Reader, {
             });
             tb.doLayout();
             that.togglePod(true);
+            that.setIconClass(iconCls);
         });
     },
     togglePod: function(toggle) {

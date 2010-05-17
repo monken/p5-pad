@@ -117,12 +117,8 @@ Ext.onReady(function(){
             items:[{
                 width:200,
                 style:'padding:10px',
-                items:[{
-                    title: 'Browse Distribution',
-                    tools: tools,
-                    iconCls: 'silk-bricks',
-                    items: new Pad.Distribution.Files({ distribution: 'PPI' })
-                },{
+                items:[ new Pad.Distribution.Files({ distribution: 'PPI' })
+                ,{
                     title: 'Related Modules',
                     tools: tools,
                     iconCls: 'silk-package-link',

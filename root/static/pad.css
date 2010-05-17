@@ -131,3 +131,7 @@
     overflow: auto;
     overflow-x: hidden;
 }
+
+.x-tab-strip-active span.x-tab-strip-text {
+    font-weight: normal
+}

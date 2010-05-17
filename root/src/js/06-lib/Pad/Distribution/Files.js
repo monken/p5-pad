@@ -3,16 +3,37 @@ Ext.ns('Pad.Distribution.Files');
 Pad.Distribution.Files = Ext.extend(Ext.tree.TreePanel, {
     autoScroll: true,
     rootVisible: false,
+    anchor : '100%',
+    frame : true,
+    collapsible : true,
+    closable : true,
+    tools: [{id:'refresh'}],
+    draggable : true,
+    iconCls: 'silk-bricks',
+    cls : 'x-portlet',
     initComponent: function() {
+        var that = this;
         Ext.apply(this, {
+            title: this.distribution,
             root: {
                 id: this.distribution,
                 expanded: true,
-                //listeners: { append: this.onLoad }
+                listeners: {
+                    expand: function(node) {
+                        node.expandChildNodes();
+                    }
+                }
             }
         });
         this.on('click', this.onClick);
         Pad.Distribution.Files.superclass.initComponent.call(this, arguments);
+        var iconCls = this.iconCls;
+        this.getLoader().on('beforeload', function(node) {
+            that.setIconClass('silk-loading');
+        });
+        this.getLoader().on('load', function(node) {
+            that.setIconClass(iconCls);
+        });
 
     },
     loader: new Ext.tree.TreeLoader({
@@ -25,10 +46,7 @@ Pad.Distribution.Files = Ext.extend(Ext.tree.TreePanel, {
         new Ext.tree.TreeSorter(this, {
             folderSort: true
         });
-    },
-    onLoad: function(tree, node) {
-        console.log(node, 1);
-        node.firstChild.expand();
+
     },
     onClick: function(node) {
         if (node.attributes.module) {
