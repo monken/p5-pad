@@ -6,6 +6,7 @@ with 'CatalystX::Controller::ExtJS::Direct';
 __PACKAGE__->config(
     actions => {
         module => { Chained => '/', PathPart => 'module', CaptureArgs => 1 },
+        search => { Chained => 'module', PathPart => '', Args => 0, Direct => undef },
         pod => { Chained => 'module', PathPart => 'pod', Args => 0, Direct => undef },
         code => { Chained => 'module', PathPart => 'code', Args => 0, Direct => undef },
         end => { Private => undef }
@@ -15,6 +16,12 @@ __PACKAGE__->config(
 sub module {
     my ($self, $c, $module) = @_;
     $c->stash->{module} = $c->model('DBIC::Module')->find_latest_by_name($module);
+    
+}
+
+sub search {
+    my ($self, $c) = @_;
+    my $search = $c->req->captures->[0];
     
 }
 
