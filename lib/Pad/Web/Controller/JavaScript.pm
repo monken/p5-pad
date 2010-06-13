@@ -1,6 +1,6 @@
 package Pad::Web::Controller::JavaScript;
 use Moose;
-extends 'Catalyst::Controller';
+BEGIN { extends 'Catalyst::Controller'; }
 
 use File::Find::Rule;
 use Path::Class::File;
@@ -15,7 +15,7 @@ sub index {
     my ($self, $c) = @_;
     my @files = 
         map { Path::Class::File->new($_) } 
-        sort File::Find::Rule->new->file->name('*.js')->in($c->path_to(qw(root src js)));
+        sort File::Find::Rule->new->file->name('*.js')->in($c->path_to(qw(jslib)));
     my $js = join("\n\n", map { scalar $_->slurp } @files);
     $c->stash->{js} = $js;
     $c->detach($c->view('JavaScript'));

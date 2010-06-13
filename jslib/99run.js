@@ -29,7 +29,7 @@ Ext.onReady(function(){
                     title: 'Welcome',
                     tools: tools,
                     iconCls: 'silk-emoticon-smile',
-                    html: '<img src="http://www.gravatar.com/avatar.php?gravatar_id=d534a891101c352b1f7872f4b0a33481&rating=G&size=80&default=http%3A%2F%2Fst.pimg.net%2Ftucs%2Fimg%2Fwho.png" style="float: left" /> Welcome PERLER.<br><br><a href="#">Logout</a>'
+                    html: '<img src="http://www.gravatar.com/avatar.php?gravatar_id=d534a891101c352b1f7872f4b0a33481&rating=G&size=80&default=http%3A%2F%2Fst.pimg.net%2Ftucs%2Fimg%2Fwho.png" style="float: left; width: 80; height: 80; padding-right: 2px" /> Welcome PERLER.<br><br><a href="#">Logout</a>'
                 },{
                     title: 'Search',
                     tools: tools,
@@ -103,7 +103,7 @@ Ext.onReady(function(){
                         bbar:[{}],
                         activeItem: 0, 
                         plain: true,
-                        items: [new Pad.Reader.Source({title: 'PPI::Document'}), {
+                        items: [new Pad.Reader.Source({title: 'Path::Class::File'}), {
                                 title: 'Results for "catalyst dispatch"',
                                 closable: true,
                                 iconCls: 'silk-magnifier',
@@ -117,7 +117,7 @@ Ext.onReady(function(){
             items:[{
                 width:200,
                 style:'padding:10px',
-                items:[ new Pad.Distribution.Files({ distribution: 'PPI' })
+                items:[ new Pad.Distribution.Files({ distribution: 'Path-Class' })
                 ,{
                     title: 'Related Modules',
                     tools: tools,

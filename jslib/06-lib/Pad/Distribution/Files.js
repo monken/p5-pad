@@ -49,13 +49,16 @@ Pad.Distribution.Files = Ext.extend(Ext.tree.TreePanel, {
 
     },
     onClick: function(node) {
-        if (node.attributes.module) {
-            var pod = new Pad.Reader.Pod({
+        var pod = node.attributes.module 
+            ? new Pad.Reader.Pod({
                 title: node.attributes.module
-            });
-            Ext.getCmp('pad-reader').add(pod);
-            Ext.getCmp('pad-reader').activate(pod);
-        }
+            }) 
+            : new Pad.Reader.Source({
+                title: node.attributes
+        });
+        Ext.getCmp('pad-reader').add(pod);
+        Ext.getCmp('pad-reader').activate(pod);
+        
     }
 
 });

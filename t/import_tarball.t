@@ -24,6 +24,6 @@ $schema->deploy;
     is( $release->distribution->releases->count, 1 );
 }
 
-my $release = $schema->resultset('Release')->import_tarball('t/var/PPI-1.212.tar.gz');
+#my $release = $schema->resultset('Release')->import_tarball('t/var/PPI-1.212.tar.gz');
 
 done_testing;

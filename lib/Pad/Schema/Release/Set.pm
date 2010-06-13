@@ -13,6 +13,7 @@ use File::stat ();
 
 sub import_tarball {
     my ($self, $tarball) = @_;
+    (my $name = $tarball) =~ s/(\.tar)?\.gz$//;
     $tarball = Path::Class::File->new($tarball);
     my $ae = Archive::Extract->new( archive => $tarball );
     my $dir = Path::Class::Dir->new(File::Temp::tempdir(CLEANUP => 1));
@@ -45,6 +46,7 @@ sub import_tarball {
         %$create,
         uploaded => DateTime->now,
         files => \@files,
+        name => $name,
         author => { name => $meta->author }
     };
     $create->{distribution} = $self->result_source->schema->resultset('Distribution')->search({ name => $meta->name })->first;
@@ -88,8 +90,13 @@ sub import_tarball {
         
         foreach my $file (@files) {
             my $info = Module::Build::ModuleInfo->new_from_file($basedir->file($file->name));
-            $release->create_related('modules', { file => $file, name => $_, version => $info->version($_) ? $info->version($_)->stringify : undef })
-                for($info->packages_inside);
+            $release->create_related('modules', 
+                { 
+                    file => $file, 
+                    name => $_, 
+                    version => $info->version($_) ? $info->version($_)->stringify : undef
+                }
+            ) for($info->packages_inside);
         }
     }
     return $release;

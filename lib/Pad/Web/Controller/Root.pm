@@ -1,6 +1,6 @@
 package Pad::Web::Controller::Root;
 use Moose;
-extends 'Catalyst::Controller';
+BEGIN { extends 'Catalyst::Controller'; }
 
 __PACKAGE__->config(
     namespace => '',

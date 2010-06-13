@@ -1,6 +1,6 @@
 package Pad::Web::Controller::Module;
 use Moose;
-extends 'Catalyst::Controller';
+BEGIN { extends 'Catalyst::Controller'; }
 with 'CatalystX::Controller::ExtJS::Direct';
 
 __PACKAGE__->config(
@@ -36,7 +36,7 @@ sub code {
     my ($self, $c) = @_;
     my $module = $c->stash->{module};
     $c->stash->{json} = { 
-        html => $module->code_html, 
+        html => $module->file->source_html, 
         sloc => $module->sloc, 
         size => $module->file->size, 
         pod_lines => $module->pod_lines

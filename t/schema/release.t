@@ -1,6 +1,8 @@
 use Test::More;
 use strict;
 use warnings;
+my $time;
+BEGIN { $time = time; }
 
 use Pad::Schema;
 
@@ -34,5 +36,9 @@ my $schema = Pad::Schema->connect('dbi:SQLite:t/var/sqlite.db');
         }
     );
 }
+#DB::enable_profile();
+my $files = $schema->resultset("Release")->search( { version => '1.212' } )->first->files->all;
+
+print time - $time, $/;
 
 done_testing;
