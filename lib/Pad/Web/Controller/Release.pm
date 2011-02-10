@@ -12,13 +12,13 @@ __PACKAGE__->config(
 
 sub release {
     my ($self, $c, $object) = @_;
-    $c->stash->{release} ||= $c->model('DBIC::Distribution')->find_by_name($object);
+    $c->stash->{release} ||= $c->model('DBIC::Distribution')->find_by_name($object) || $c->detach;
 }
 
 sub files {
     my ($self, $c) = @_;
     my $release = $c->stash->{release};
-    $c->stash->{json} = [{ text => $release->name, expanded => \1, children => $release->files_tree }];
+    $c->stash->{json} = [{ text => $release->name, release => $release->name, expanded => \1, children => $release->files_tree }];
     $c->forward($c->view('JSON'));
 }
 

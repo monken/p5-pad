@@ -18,7 +18,7 @@ sub tree {
         } else {
             my $module = $files->{$file}->module->name 
                 if($files->{$file}->has_module );
-            push(@$return, { text => $file, leaf => \1, module => $module });
+            push(@$return, { text => $file, leaf => \1, module => $module, id => $files->{$file}->id });
         }
     }
     while(my($dir, $dirfiles) = each %dirs) {
@@ -32,6 +32,12 @@ sub no_content {
     return $self->search(undef, { columns => [
         grep { $_ ne 'content' } $self->result_source->columns
     ] } );
+}
+
+sub find_by_full_path {
+    my ($self, $file) = @_;
+    my ($release, @path) = split(/\//, $file);
+    return $self->search({ 'release.name' => $release, 'me.name' => join("/", @path) }, { prefetch => 'release' })->first;
 }
 
 1;

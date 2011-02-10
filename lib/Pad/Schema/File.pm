@@ -1,6 +1,8 @@
 package Pad::Schema::File;
 
 use MooseX::DBIC;
+with 'AutoUpdate';
+
 use File::stat ();
 use Syntax::Highlight::Engine::Kate ();
 
@@ -13,13 +15,29 @@ has_column [qw(source_html)] => ( is => 'ro', isa => 'Str', lazy_build => 1 );
 belongs_to 'release';
 might_have module => ( isa => 'Pad::Schema::Module', predicate => 'has_module' );
 
+my %ext_map = (
+    t => 'Perl',
+    pl => 'Perl',
+    pm => 'Perl',
+    sql => 'SQL',
+    js => 'JavaScript',
+);
+
+sub full_path {
+    my $self = shift;
+    return join('/', $self->release->name, $self->name);
+}
 
 sub _build_source_html {
     my $self = shift;
-    my $code = ${$self->file->content};
+    my $code = ${$self->content};
     my $i = 1;
+    my $ext;
+    if($self->name =~ /\.(\w+?)$/) {
+        $ext = lc($1);
+    }
     my $lines = join("", map { '<div>' . $i++ . '</div>' } split(/\n/, $code));
-    my $kate = Syntax::Highlight::Engine::Kate->new( language => 'Perl',
+    my $kate = Syntax::Highlight::Engine::Kate->new( language => $ext_map{$ext} || 'M3U',
     substitutions => {
            "<" => "&lt;",
            ">" => "&gt;",

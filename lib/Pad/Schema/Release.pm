@@ -1,7 +1,7 @@
 package Pad::Schema::Release;
 
 use MooseX::DBIC;
-with 'AutoUpdate';
+#with 'AutoUpdate';
 
 has_column uploaded   => ( isa => 'DateTime', required => 1 );
 has_many dependencies => ( isa => ResultSet['Pad::Schema::Dependency'] );

@@ -1,10 +1,12 @@
 
-Ext.BLANK_IMAGE_URL = '/static/extjs/images/default/s.gif';
+Ext.ns('Pad.Singelton');
 
 Ext.onReady(function(){
+    Ext.BLANK_IMAGE_URL = '/static/extjs/images/default/s.gif';
 
     Ext.Direct.addProvider(Ext.app.REMOTING_API);
 
+    
     Ext.QuickTips.init();
 
     var tools = [{
@@ -13,12 +15,19 @@ Ext.onReady(function(){
             panel.ownerCt.remove(panel, true);
         }
     }];
-
+    
+    Pad.UI = {};
+    Pad.UI.FilesPanel = new Pad.FilesPanel({items: [] });
+    Pad.UI.RelatedPanel = new Pad.RelatedPanel();
+    Pad.UI.TabPanel = new Pad.TabPanel({
+        items: [new Pad.Reader.Source.Code({title: 'Path::Class::File'})]
+    });
+    
     var viewport = new Ext.Viewport({
         layout:'border',
         frame: false,
         defaults: { bodyStyle: 'background-color: #e8f0Fe;', bodyCssClass: 'pad-no-scroll-x', border: false, autoScroll: false },
-        items:[{
+        items:[/*{
             xtype:'portal',
             region:'west',
             width: 200,
@@ -90,26 +99,12 @@ Ext.onReady(function(){
                     iconCls: 'silk-rss',
                     items: [{html: 'News Item I'}]
             }]
-            }]},{
+            }]},*/{
                 region: 'center',
+                style: 'padding-left: 10px',
                 layout: 'fit',
                 border:false,
-                items: [
-                    {
-                        xtype: 'tabpanel', 
-                        style:'padding:10px 0px 10px 0px',
-                        id: 'pad-reader',
-                        enableTabScroll: true,
-                        bbar:[{}],
-                        activeItem: 0, 
-                        plain: true,
-                        items: [new Pad.Reader.Source({title: 'Path::Class::File'}), {
-                                title: 'Results for "catalyst dispatch"',
-                                closable: true,
-                                iconCls: 'silk-magnifier',
-                                html: 'foo'
-                            }]
-                    }]
+                items: [ Pad.UI.TabPanel ]
             },{
             xtype:'portal',
             region:'east',
@@ -117,13 +112,10 @@ Ext.onReady(function(){
             items:[{
                 width:200,
                 style:'padding:10px',
-                items:[ new Pad.Distribution.Files({ distribution: 'Path-Class' })
-                ,{
-                    title: 'Related Modules',
-                    tools: tools,
-                    iconCls: 'silk-package-link',
-                    html: '<ul><li>Class::MOP<li>Class::MOP::Class<li>Moose::Meta::Attribute</ul>'
-                }]
+                items:[ Pad.UI.FilesPanel
+                ,
+                 Pad.UI.RelatedPanel 
+                 ]
             }]
             
             /*

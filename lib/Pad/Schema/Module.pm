@@ -1,7 +1,7 @@
 package Pad::Schema::Module;
 
 use MooseX::DBIC;
-with 'AutoUpdate';
+#with 'AutoUpdate';
 use version;
 use PPI;
 use Pod::POM;

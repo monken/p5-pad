@@ -13,8 +13,8 @@ use File::stat ();
 
 sub import_tarball {
     my ($self, $tarball) = @_;
-    (my $name = $tarball) =~ s/(\.tar)?\.gz$//;
     $tarball = Path::Class::File->new($tarball);
+    (my $name = $tarball->basename) =~ s/(\.tar)?\.gz$//;
     my $ae = Archive::Extract->new( archive => $tarball );
     my $dir = Path::Class::Dir->new(File::Temp::tempdir(CLEANUP => 1));
     $ae->extract( to => $dir );
@@ -52,7 +52,6 @@ sub import_tarball {
     $create->{distribution} = $self->result_source->schema->resultset('Distribution')->search({ name => $meta->name })->first;
     $create->{distribution} ||= { name => $meta->name };
 
-    
     my $release = $self->create($create);
     $release = $self->find($release->id);
     

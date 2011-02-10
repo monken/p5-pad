@@ -17,7 +17,7 @@ no MooseX::Attribute::Deflator;
 
 use MooseX::DBIC::TypeMap;
 
-map_type 'File::stat' => 'ArrayRef';
+map_type 'File::stat' => 'VARCHAR';
 
 no MooseX::DBIC::TypeMap;
 

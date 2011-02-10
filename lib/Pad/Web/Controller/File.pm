@@ -5,26 +5,44 @@ with 'CatalystX::Controller::ExtJS::Direct';
 
 __PACKAGE__->config(
     actions => {
-        file => { Chained => '/release/release', PathPart => 'file', CaptureArgs => 1 },
+        file => { Chained => '/', PathPart => 'file', CaptureArgs => 1 },
         source => { Chained => 'file', PathPart => 'source', Args => 0, Direct => undef },
+        related => { Chained => 'file', PathPart => 'related', Args => 0, Direct => undef },
         end => { Private => undef }
     }
 );
 
 sub file {
     my ($self, $c, $file) = @_;
-    my ($distribution, @path) = split(/\//, $file);
-    $c->stash->{file} = $c->model('DBIC::Distribution')->find_by_name($file);
+    $c->stash->{file} = $c->model('DBIC::File')->find_by_full_path($file) || $c->detach;
     
 }
 
 sub source {
     my ($self, $c) = @_;
-    my $module = $c->stash->{module};
+    my $file = $c->stash->{file};
     $c->stash->{json} = { 
-        html => $module->file->source_html, 
+        html => $file->source_html,
+        size => $file->size,
+        file => $file->full_path,
+        release => $file->release->name,
     };
     $c->forward($c->view('JSON'));
+}
+
+sub related {
+    my ($self, $c) = @_;
+    my $file = $c->stash->{file};
+    $file->name;
+    my $release = $file->release;
+    my $dependencies = $release->dependencies;
+    
+    $c->log->debug($file->release);
+    my @data;
+    while(my $dep = $dependencies->next) {
+        push(@data, { name => $dep->module_name });
+    }
+    $c->stash->{json} = { data => \@data, file => $file->full_path };
 }
 
 sub end {

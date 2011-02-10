@@ -8,6 +8,8 @@ unlink('t/var/sqlite.db') if(-e 't/var/sqlite.db');
 my $schema = Pad::Schema->connect('dbi:SQLite:t/var/sqlite.db');
 $schema->deploy;
 
+#die Pad::Schema::File->meta->get_attribute("content")->accessor_metaclass;
+
 {
     my $release = $schema->resultset('Release')->import_tarball('t/var/Path-Class-0.18.tar.gz');
     is( $release->files->count, 15 );
@@ -24,6 +26,10 @@ $schema->deploy;
     is( $release->distribution->releases->count, 1 );
 }
 
+{
+    my $release = $schema->resultset('Release')->import_tarball('t/var/perl-5.12.1.tar.gz');
+    
+}
 #my $release = $schema->resultset('Release')->import_tarball('t/var/PPI-1.212.tar.gz');
 
 done_testing;

@@ -5,6 +5,7 @@ Pad.Reader.Pod = Ext.extend(Pad.Reader, {
     autoScroll: true,
     iconCls: 'silk-package',
     padding: '5px 5px 5px 25px',
+    xtype: 'padreaderpod',
     closable: true,
     tbar: [{
         iconCls: 'silk-star',
@@ -16,11 +17,11 @@ Pad.Reader.Pod = Ext.extend(Pad.Reader, {
         text: 'Source Code',
         enableToggle: true,
         handler: function() {
-            var pod = new Pad.Reader.Source({
-                title: this.ownerCt.ownerCt.title
+            var pod = new Pad.Reader.Source.Code({
+                title: this.ownerCt.ownerCt.title,
+                distribution: this.ownerCt.ownerCt.distribution
             });
-            Ext.getCmp('pad-reader').add(pod);
-            Ext.getCmp('pad-reader').activate(pod);
+            Pad.UI.TabPanel.add(pod);
         }
     },
     {
@@ -55,14 +56,18 @@ Pad.Reader.Pod = Ext.extend(Pad.Reader, {
     onRender: function(tab) {
         Pad.Reader.Pod.superclass.onRender.call(this, tab);
         var that = this;
-        Module.pod(this.title, function(prov, res) {
-            that.body.insertHtml('afterBegin', res.result.html);
-            that.toc.tree.root.appendChild(res.result.toc);
-            that.toc.tree.on('click', function(node) {
-                that.scrollToSection(node.text);
-            });
-        });
+        Module.pod(this.title, this.onLoad.createDelegate(this));
         this.toc.body = this.body;
+    },
+    onLoad: function(prov, res) {
+        Pad.Reader.Pod.superclass.onLoad.call(this, prov, res);
+        if(!res.result) return;
+        this.body.insertHtml('afterBegin', res.result.html);
+        this.toc.tree.root.appendChild(res.result.toc);
+        var that = this;
+        this.toc.tree.on('click', function(node) {
+            that.scrollToSection(node.text);
+        });
     },
     afterRender: function(tab, foo) {
         Pad.Reader.Pod.superclass.afterRender.call(this, tab);

@@ -135,3 +135,29 @@
 .x-tab-strip-active span.x-tab-strip-text {
     font-weight: normal
 }
+
+.pad-related-item {
+    display: block;
+    cursor: pointer;
+    padding: 2px;
+    border: 1px solid #fff
+}
+.pad-related-item-selected {
+    border: 1px dotted #A3BAE9 !important;
+    background-color: #DFE8F6;
+}
+
+.x-panel-resize {
+        height:5px !important;
+        border-top: 1px solid #A3BAE9 !important;
+        background:transparent url(/static/ux/panel-handle.gif) no-repeat center bottom;
+        position:relative;
+        left:0;
+        top:0px;
+        cursor:n-resize;
+        cursor:row-resize;
+        /* for IE */
+        font-size:1px;
+        line-height:1px;
+        overflow:hidden;
+}

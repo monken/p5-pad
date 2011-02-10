@@ -34,9 +34,7 @@ sub view_begin {
 
 sub view_pod {
     my ($self, $pod) = @_;
-    my $permalink = $self->root . "?permalink=" . $self->module; # There has to be a better way
     return qq~
-<div id="permalink"><a href="$permalink">Permalink</a></div>
 <div class="pod">
 ~
    . $pod->content->present($self)
@@ -82,7 +80,7 @@ sub view_seq_link_transform_path {
         }
 
         $title = $url unless defined $title;
-        return qq{<a href="$url" onclick="return POD.proxyLink(this)">$title</a>};
+        return qq{<a href="$url" onclick="return Pad.UI.TabPanel.proxyLink(this)">$title</a>};
     }
 }
 
