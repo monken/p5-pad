@@ -15,8 +15,9 @@ builder {
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pad</title>
-
-    <link rel="stylesheet" type="text/css" href="/static/extjs/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="http://extjs.cachefly.net/ext-3.3.1/resources/css/ext-all.css" />
+    <script type="text/javascript" src="http://extjs.cachefly.net/ext-3.3.1/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="http://extjs.cachefly.net/ext-3.3.1/ext-all.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/Portal.css" />
     <link rel="stylesheet" type="text/css" href="/static/silk.css" />
     <link rel="stylesheet" type="text/css" href="/static/cpan.css" />
