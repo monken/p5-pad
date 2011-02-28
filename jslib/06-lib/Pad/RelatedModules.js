@@ -32,13 +32,13 @@ Pad.RelatedModules = Ext.extend(Ext.Panel, {
         if(!this.module) return;
         var read = this.file ? File.related : Module.related;
         this.store.proxy.setApi(Ext.data.Api.actions.read, read);
-        this.store.load({ params: this.file ? this.file : this.module });
+        //this.store.load({ params: this.file ? this.file : this.module });
     },
-    onLoad: function(prov, res) {
-        this.file = res.result.file || this.destroy();
+    onLoad: function(res) {
+        this.file = res.file || this.destroy();
         this.fireEvent('load');
     },
-    onException: function(prov, res) {
+    onException: function(res) {
         this.destroy();
     },
     onClick: function(view, index, dom, e) {

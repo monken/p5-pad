@@ -4,7 +4,7 @@ Ext.ns('Pad.Singelton');
 Ext.onReady(function(){
     Ext.BLANK_IMAGE_URL = '/static/extjs/images/default/s.gif';
 
-    Ext.Direct.addProvider(Ext.app.REMOTING_API);
+    // Ext.Direct.addProvider(Ext.app.REMOTING_API);
 
     
     Ext.QuickTips.init();
@@ -20,7 +20,7 @@ Ext.onReady(function(){
     Pad.UI.FilesPanel = new Pad.FilesPanel({items: [] });
     Pad.UI.RelatedPanel = new Pad.RelatedPanel();
     Pad.UI.TabPanel = new Pad.TabPanel({
-        items: [new Pad.Reader.Source.Code({title: 'Path::Class::File'})]
+        items: [new Pad.Reader.Pod({title: 'DBIx::Class::ResultSource'})]
     });
     
     var viewport = new Ext.Viewport({

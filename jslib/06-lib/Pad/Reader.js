@@ -25,11 +25,11 @@ Pad.Reader = Ext.extend(Ext.Panel, {
         this.oldIconCls = this.iconCls;
         this.setIconClass('silk-loading');
     },
-    onLoad: function(prov, res) {
+    onLoad: function(res) {
         this.setIconClass(this.oldIconCls);
-        if(res.result) {
-            this.file = res.result.file;
-            this.release = res.result.release;
+        if(res) {
+            this.file = res.file;
+            this.release = res.release;
             Ext.fly(this.ownerCt.getTabEl(this)).child('span.x-tab-strip-text', true).qtip = this.file;
         } else {
             this.file = this.title;

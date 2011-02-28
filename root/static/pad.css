@@ -20,28 +20,6 @@
     bottom: 0px;
     right: 0px;
 }
-.highlight div, .line-numbers div {
-    height: 16px
-}
-
-.highlight div {
-    font-size: 11px
-}
-
-.line-numbers div {
-    text-align: right;
-    color: #999
-}
-
-.highlight, .line-numbers {
-    padding: 0px 4px 0px 4px;
-    padding-top: 5px;
-}
-
-.line-numbers {
-    border-width: 0px 1px 0px 0px;
-    margin-right: 5px
-}
 
 .pad-reader-source-table td {
     vertical-align: top;
@@ -160,4 +138,8 @@
         font-size:1px;
         line-height:1px;
         overflow:hidden;
+}
+
+.syntaxhighlighter {
+    font-size: 12px !important;
 }

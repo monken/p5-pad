@@ -1,8 +1,10 @@
-.pod html, .pod body, .pod dl, .pod dt, .pod dd, .pod ul, .pod ol, .pod li, .pod h1, .pod h2, .pod h3, .pod h4, .pod h5, .pod h6, .pod pre, .pod form, .pod fieldset, .pod input, .pod p, .pod blockquote, .pod th, .pod td
+.pod html, .pod body, .pod dl, .pod dt, .pod dd, .pod h1, .pod h2, .pod h3, .pod h4, .pod h5, .pod h6, .pod pre, .pod form, .pod fieldset, .pod input, .pod p, .pod blockquote, .pod th, .pod td
 {
     margin: 5px;
     padding: 5px;
 }
+
+.pod #index { display:none }
 
 #permalink {
     margin: 5px;

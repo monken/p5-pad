@@ -1,9 +1,24 @@
 Ext.ns('Pad.Reader.TOC');
 
 Pad.Reader.TOC.Pod = Ext.extend(Ext.Container, {
+    parseTOC: function(pod) {
+        this.tree.root.appendChild(this.buildTree(pod));
+    },
+    buildTree: function(html) {
+        var toc = [];
+        for(var i = 0; i < html.children.length; i++) {
+            var child = html.children[i];
+            var item = { text: child.firstChild.innerHTML, id: child.firstChild.getAttribute('href').replace(/#/, "") };
+            if(child.children.length > 1) {
+                item.children = this.buildTree(child.children[1]);
+            } else {
+                item.leaf = true;
+            }
+            toc.push(item);
+        }
+        return toc;
+    },
     afterRender: function(el) {
-        //Pad.Reader.TOC.Pod.superclass.call(this, el);
-        //console.log(el, this);
         el.insertHtml('afterBegin', '<div class="x-toolbar pad-toc-container"><div class="pad-toc-tree"></div>T<br>O<br>C<div class="pad-toc-tool"></div></div>');
         this.el = el.child('.pad-toc-container');
         var button = new Ext.Button({

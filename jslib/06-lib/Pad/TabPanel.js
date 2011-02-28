@@ -43,7 +43,6 @@ Pad.TabPanel = Ext.extend(Ext.TabPanel, {
         if(c) this.loadPortlets(c);
     },
     proxyLink: function(link) {
-        console.log(link);
         return false;
     }
 });

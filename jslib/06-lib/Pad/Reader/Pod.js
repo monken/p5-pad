@@ -59,14 +59,16 @@ Pad.Reader.Pod = Ext.extend(Pad.Reader, {
         Module.pod(this.title, this.onLoad.createDelegate(this));
         this.toc.body = this.body;
     },
-    onLoad: function(prov, res) {
-        Pad.Reader.Pod.superclass.onLoad.call(this, prov, res);
-        if(!res.result) return;
-        this.body.insertHtml('afterBegin', res.result.html);
-        this.toc.tree.root.appendChild(res.result.toc);
+    onLoad: function(res) {
+        Pad.Reader.Pod.superclass.onLoad.call(this, res);
+        if(!res) return;
+        res.html = res.html.replace(/<pre>/g, '<pre class="brush: pl; class-name: \'highlight\'; toolbar: false;">');
+        this.body.insertHtml('afterBegin', '<div class="pod">' + res.html + '</div>');
+        SyntaxHighlighter.highlight();
+        this.toc.parseTOC(Ext.select('ul[id="index"]', false, this.body.dom).elements[0]);
         var that = this;
         this.toc.tree.on('click', function(node) {
-            that.scrollToSection(node.text);
+            that.scrollToSection(node.id);
         });
     },
     afterRender: function(tab, foo) {
@@ -84,7 +86,8 @@ Pad.Reader.Pod = Ext.extend(Pad.Reader, {
         });
     },
     scrollToSection: function(section) {
-        var el = Ext.select('a[name="section-' + this.title + '-' + section + '"]');
+        console.log(section);
+        var el = Ext.select('[id="' + section + '"]', false, this.body.dom);
         if (!el.elements[0]) return;
         var top = (Ext.fly(el.elements[0]).getOffsetsTo(this.body)[1]) + this.body.dom.scrollTop;
         this.body.scrollTo('top', top, {

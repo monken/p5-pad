@@ -14,18 +14,19 @@ Pad.Reader.Source = Ext.extend(Pad.Reader, {
     load: function() {
         File.source(this.file, this.onLoad.createDelegate(this));
     },
-    onLoad: function(prov, res) {
-        Pad.Reader.Source.superclass.onLoad.call(this, prov, res);
-        this.body.insertHtml('afterBegin', res.result.html);
-        this.podLines = res.result.pod_lines;
-        this.release = res.result.release;
+    onLoad: function(res) {
+        Pad.Reader.Source.superclass.onLoad.call(this, res);
+        this.body.insertHtml('afterBegin', '<pre class="brush: pl; class-name: \'highlight\'; toolbar: false;">' + Ext.util.Format.htmlEncode(res.source) + '</pre>');
+        SyntaxHighlighter.highlight();
+        this.podLines = res.pod_lines;
+        this.release = res.release;
         var tb = this.getTopToolbar();
-        var lines = this.body.child('.highlight').dom.firstChild.children.length;
+        var lines = this.body.child('.container').dom.children.length;
         tb.addText(Ext.util.Format.number(lines, '0,0') + ' lines');
-        if(res.result.sloc)
-            tb.addText(' (' + Ext.util.Format.number(res.result.sloc, '0,0') + ' sloc)');
+        if(res.sloc)
+            tb.addText(' (' + Ext.util.Format.number(res.sloc, '0,0') + ' sloc)');
         tb.addSeparator();
-        tb.addText(Ext.util.Format.number(res.result.size / 1024, '0,000.0') + ' kb');
+        tb.addText(Ext.util.Format.number(res.stat.size / 1024, '0,000.0') + ' kb');
         tb.addFill();
         tb.add({
             iconCls: 'silk-printer',

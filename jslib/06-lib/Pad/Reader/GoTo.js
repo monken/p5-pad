@@ -38,7 +38,8 @@ Pad.Reader.GoTo = Ext.extend(Ext.Window, {
     border: false,
     store: {
         root: 'data',
-        fields: ['name', 'release', 'file']
+        fields: ['name', 'release', 'file'],
+        proxy: new Pad.DataProxy({ api: { read: Module.search } }),
     },
     combo: {
         region: 'north',
@@ -68,8 +69,8 @@ Pad.Reader.GoTo = Ext.extend(Ext.Window, {
         var that = this;
         this.combo = new Pad.Reader.GoToComboBox(this.combo);
         this.list = new Ext.Panel(this.list);
-        this.combo.store = new Ext.data.DirectStore(this.store);
-        this.combo.getStore().proxy.setApi(Ext.data.Api.actions.read, Module.search);
+        this.combo.store = new Ext.data.JsonStore(this.store);
+        console.log(this.combo.store);
         Ext.apply(this, {
             items: [this.combo, this.list]
         });
