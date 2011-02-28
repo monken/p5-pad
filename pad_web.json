@@ -1,7 +1,0 @@
-{
-    "Model::DBIC": {
-        "connect_info": {
-            "dsn": "dbi:SQLite:t/var/sqlite.db"
-        }
-    }
-}
