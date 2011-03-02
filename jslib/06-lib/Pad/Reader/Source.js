@@ -12,14 +12,13 @@ Pad.Reader.Source = Ext.extend(Pad.Reader, {
         this.load();
     },
     load: function() {
-        File.source(this.file, this.onLoad.createDelegate(this));
+        File.source(this.author, this.release, this.file, this.onLoad.createDelegate(this));
     },
     onLoad: function(res) {
         Pad.Reader.Source.superclass.onLoad.call(this, res);
         this.body.insertHtml('afterBegin', '<pre class="brush: pl; class-name: \'highlight\'; toolbar: false;">' + Ext.util.Format.htmlEncode(res.source) + '</pre>');
         SyntaxHighlighter.highlight();
         this.podLines = res.pod_lines;
-        this.release = res.release;
         var tb = this.getTopToolbar();
         var lines = this.body.child('.container').dom.children.length;
         tb.addText(Ext.util.Format.number(lines, '0,0') + ' lines');

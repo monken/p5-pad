@@ -12,21 +12,28 @@ Pad.CardPortlet = Ext.extend(Ext.Panel, {
     identifier: 'distribution',
     collapsible: true,
     draggable: true,
-    add: function(c) {
+    add: function(c, count) {
         var found = this.find(this.identifier, c[this.identifier]);
-        if (found && found[0]) return this.activate(found[0]);
+        if (found && found[0]) {
+            if(count) found[0].references++;
+            return this.activate(found[0]);
+        }
 
         if(Ext.isArray(c)) return;
+        c = Ext.ComponentMgr.create(c);
         var comp = Pad.CardPortlet.superclass.add.call(this, c);
         comp.on('beforeload', this.onBeforeLoad, this)
         comp.on('load', this.onLoad, this)
         comp.on('exception', this.onLoad, this)
         this.activate(c);
+        return c;
     },
     remove: function(c) {
         var found = this.find(this.identifier, c[this.identifier]);
-        if (found && found[0]) c = found[0];
-        return Pad.CardPortlet.superclass.remove.call(this, c);
+        if(!found || !found[0]) return;
+        found[0].references--;
+        if(found[0].references) return;
+        return Pad.CardPortlet.superclass.remove.call(this, found[0]);
     },
     activate: function(c) {
         //this.setTitle(c.distribution);

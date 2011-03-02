@@ -1,22 +1,20 @@
 Ext.ns('Pad.Files');
-
 Pad.Files = Ext.extend(Ext.tree.TreePanel, {
     autoScroll: true,
-    rootVisible: false,
+    rootVisible: true,
     anchor: '100%',
     animate: false,
+    xtype: 'padfiles',
+    references: 1,
     cls: 'x-portlet',
     initComponent: function() {
         var that = this;
         Ext.apply(this, {
             root: {
-                id: this.module,
+                id: this.author + "/" + this.release,
+                text: this.author + "/" + this.release,
                 expanded: true,
-                listeners: {
-                    expand: function(node) {
-                        node.expandChildNodes();
-                    }
-                }
+                level: -1,
             }
         });
         
@@ -27,8 +25,17 @@ Pad.Files = Ext.extend(Ext.tree.TreePanel, {
 
     },
     loader: new Ext.tree.TreeLoader({
-        directFn: function(root, cb) {
-            Module.files(root, cb)
+        load: function(node, cb, scope) {
+            var tree = node.ownerTree;
+            var that = this;
+            var level = node.attributes.level + 1;
+            Release.files({ author: tree.author, release: tree.release, level: level, prefix: level == 0 ? '' : node.attributes.path }, function(result) {
+            that.handleResponse({
+                            responseData: Ext.isArray(result) ? result : null,
+                            responseText: result,
+                            argument: { node: node, callback: cb, scope: scope }
+                        });
+                    });
         }
     }),
     onRender: function(tree) {
@@ -40,30 +47,28 @@ Pad.Files = Ext.extend(Ext.tree.TreePanel, {
     },
     onLoad: function() {
         if (!this.root.firstChild) return this.root.on('expand', this.destroy, this);
-        this.release = this.root.firstChild.attributes.release;
     },
     onClick: function(node, e) {
         var pod;
         if (node.hasChildNodes()) return node.toggle();
 
-        var file = "";
-        node.bubble(function(node) {
-            if (node.getDepth() == 0) return;
-            file = node.text + (file ? '/' + file : '');
-        });
+        var file = node.attributes.path;
 
         if (node.attributes.module && !e.shiftKey) pod = new Pad.Reader.Pod({
             title: node.attributes.module,
             release: this.release,
+            author: this.author,
             file: file,
         });
         else if (node.attributes.module) pod = new Pad.Reader.Source.Code({
             title: node.attributes.module,
             release: this.release,
+            author: this.author,
             file: file,
         });
         else pod = new Pad.Reader.Source({
             title: node.attributes.text,
+            author: this.author,
             release: this.release,
             file: file,
         });
@@ -72,3 +77,5 @@ Pad.Files = Ext.extend(Ext.tree.TreePanel, {
     }
 
 });
+
+Ext.reg('padfiles', Pad.Files);

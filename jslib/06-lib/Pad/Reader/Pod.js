@@ -15,11 +15,13 @@ Pad.Reader.Pod = Ext.extend(Pad.Reader, {
     '->', {
         iconCls: 'silk-page-white-code',
         text: 'Source Code',
-        enableToggle: true,
         handler: function() {
             var pod = new Pad.Reader.Source.Code({
                 title: this.ownerCt.ownerCt.title,
-                distribution: this.ownerCt.ownerCt.distribution
+                release: this.ownerCt.ownerCt.release,
+                author: this.ownerCt.ownerCt.author,
+                file: this.ownerCt.ownerCt.file,
+                
             });
             Pad.UI.TabPanel.add(pod);
         }
@@ -63,6 +65,7 @@ Pad.Reader.Pod = Ext.extend(Pad.Reader, {
         Pad.Reader.Pod.superclass.onLoad.call(this, res);
         if(!res) return;
         res.html = res.html.replace(/<pre>/g, '<pre class="brush: pl; class-name: \'highlight\'; toolbar: false;">');
+        res.html = this.fixModuleLinks(res.html);
         this.body.insertHtml('afterBegin', '<div class="pod">' + res.html + '</div>');
         SyntaxHighlighter.highlight();
         this.toc.parseTOC(Ext.select('ul[id="index"]', false, this.body.dom).elements[0]);
@@ -70,6 +73,10 @@ Pad.Reader.Pod = Ext.extend(Pad.Reader, {
         this.toc.tree.on('click', function(node) {
             that.scrollToSection(node.id);
         });
+    },
+    fixModuleLinks: function(html) {
+        html = html.replace(/ class="moduleLink"/g, ' onclick="Pad.UI.TabPanel.add(new Pad.Reader.Pod({title: this.getAttribute(\'href\')})); return false;"');
+        return html;
     },
     afterRender: function(tab, foo) {
         Pad.Reader.Pod.superclass.afterRender.call(this, tab);
@@ -86,7 +93,6 @@ Pad.Reader.Pod = Ext.extend(Pad.Reader, {
         });
     },
     scrollToSection: function(section) {
-        console.log(section);
         var el = Ext.select('[id="' + section + '"]', false, this.body.dom);
         if (!el.elements[0]) return;
         var top = (Ext.fly(el.elements[0]).getOffsetsTo(this.body)[1]) + this.body.dom.scrollTop;

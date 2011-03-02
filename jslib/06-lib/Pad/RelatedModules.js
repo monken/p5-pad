@@ -1,8 +1,10 @@
 Ext.ns('Pad.RelatedModules');
 
 Pad.RelatedModules = Ext.extend(Ext.Panel, {
+    references: 1,
+    xtype: 'padrelated',
     view: {
-        tpl: '<tpl for="."><div class="pad-related-item">{name}</div></tpl>',
+        tpl: '<tpl for="."><div class="pad-related-item">{module} {version}</div></tpl>',
         singleSelect: true,
         overClass: 'pad-related-item-selected',
         itemSelector: '.pad-related-item',
@@ -12,31 +14,23 @@ Pad.RelatedModules = Ext.extend(Ext.Panel, {
     },
     store: {
         root: 'data',
-        fields: ['name']
+        fields: ['module', 'version'],
     },
     initComponent: function() {
         Pad.RelatedModules.superclass.initComponent.call(this, arguments);
-        this.addEvents('load');
+        this.store.proxy = new Pad.DataProxy({ api: { read: Release.dependencies } });
+        this.store = new Ext.data.JsonStore(this.store);
+        this.view = new Ext.DataView(this.view);
+        this.view.on('click', this.onClick);
+        
+        this.relayEvents(this.store.proxy, ['load', 'beforeload', 'exception']);
     },
     afterRender: function() {
         Pad.RelatedModules.superclass.afterRender.call(this, arguments);
-        this.view.applyTo = this.body;
-        this.view = new Ext.DataView(this.view);
-        this.store = new Ext.data.DirectStore(this.store);
-        this.relayEvents(this.store.proxy, ['beforeload', 'exception']);
-        this.store.proxy.on('load', this.onLoad, this);
-        this.store.proxy.on('exception', this.onException, this);
-        
+        this.view.render(this.body);
         this.view.bindStore(this.store);
-        this.view.on('click', this.onClick);
-        if(!this.module) return;
-        var read = this.file ? File.related : Module.related;
-        this.store.proxy.setApi(Ext.data.Api.actions.read, read);
-        //this.store.load({ params: this.file ? this.file : this.module });
-    },
-    onLoad: function(res) {
-        this.file = res.file || this.destroy();
-        this.fireEvent('load');
+        
+        this.store.load({ params: { author: this.author, release: this.release } });
     },
     onException: function(res) {
         this.destroy();
@@ -45,13 +39,14 @@ Pad.RelatedModules = Ext.extend(Ext.Panel, {
         var module = view.getSelectedRecords()[0].data;
         if (e.shiftKey) {
             pod = new Pad.Reader.Source.Code({
-                title: module.name,
+                title: module.module,
             });
         } else {
             pod = new Pad.Reader.Pod({
-                title: module.name,
+                title: module.module,
             });
         }
         Pad.UI.TabPanel.add(pod);
     }
 });
+Ext.reg('padrelated', Pad.RelatedModules);

@@ -35,14 +35,14 @@ Pad.Reader.TOC.Pod = Ext.extend(Ext.Container, {
             renderTo: el.child('.pad-toc-tree'),
             root: {
                 id: 'root',
-                text: 'Moose',
+                text: 'TOC',
                 expanded: true,
                 children: []
             }
         });
         var treeWidth = this.tree.getWidth() + 2;
 
-        this.getEl().alignTo(this.body, 'tl-tl');
+        this.getEl().alignTo(this.container, 'tl-tl', [0, 27]);
         var toc = el.child('.pad-toc-container');
         var x = toc.getX() - treeWidth;
         this.el.setX(x);

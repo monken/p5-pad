@@ -1,10 +1,7 @@
-Ext.ns('Pad.Reader.GoTo');
-Ext.ns('Pad.Reader.GoToComboBox');
-
-Pad.Reader.GoToComboBox = Ext.extend(Ext.form.ComboBox, {
+Pad.GoToComboBox = Ext.extend(Ext.form.ComboBox, {
     expand: function() {},
     afterRender: function() {
-        Pad.Reader.GoToComboBox.superclass.afterRender.call(this, arguments);
+        Pad.GoToComboBox.superclass.afterRender.call(this, arguments);
         this.list.setStyle({
             left: null,
             top: null,
@@ -29,17 +26,16 @@ Pad.Reader.GoToComboBox = Ext.extend(Ext.form.ComboBox, {
     restrictHeight: function() {},
 });
 
-Pad.Reader.GoTo = Ext.extend(Ext.Window, {
-    title: 'Go to module',
+Pad.GoTo = Ext.extend(Ext.Window, {
     layout: 'border',
     width: 300,
     iconCls: 'silk-package',
     height: 200,
     border: false,
+    tpl: '<tpl for="."><div class="x-combo-list-item">{name}</div></tpl>',
     store: {
         root: 'data',
-        fields: ['name', 'release', 'file'],
-        proxy: new Pad.DataProxy({ api: { read: Module.search } }),
+        fields: ['pauseid', 'name', 'release', 'file'],
     },
     combo: {
         region: 'north',
@@ -67,17 +63,18 @@ Pad.Reader.GoTo = Ext.extend(Ext.Window, {
     },
     initComponent: function() {
         var that = this;
-        this.combo = new Pad.Reader.GoToComboBox(this.combo);
+        this.combo = new Pad.GoToComboBox(Ext.applyIf({ tpl: this.tpl }, this.combo));
         this.list = new Ext.Panel(this.list);
+        
+        this.store.proxy = new Pad.DataProxy({ api: { read: this.api } }),
         this.combo.store = new Ext.data.JsonStore(this.store);
-        console.log(this.combo.store);
         Ext.apply(this, {
             items: [this.combo, this.list]
         });
-        Pad.Reader.GoTo.superclass.initComponent.call(this, arguments);
+        Pad.GoTo.superclass.initComponent.call(this, arguments);
     },
     initEvents: function() {
-        Pad.Reader.GoTo.superclass.initEvents.call(this, arguments);
+        Pad.GoTo.superclass.initEvents.call(this, arguments);
         var that = this;
         this.combo.on('select', this.onSelect, this);
         this.combo.getStore().on('beforeload', function() {
@@ -90,37 +87,9 @@ Pad.Reader.GoTo = Ext.extend(Ext.Window, {
 
     },
     afterRender: function() {
-        Pad.Reader.GoTo.superclass.afterRender.call(this, arguments);
+        Pad.GoTo.superclass.afterRender.call(this, arguments);
         this.combo.list.appendTo(this.list.body);
         this.combo.list.show();
 
-    },
-    onSelect: function(combo, r) {
-        var pod;
-        if (combo.shift) {
-            pod = new Pad.Reader.Source.Code({
-                title: r.data.name,
-                release: r.data.release,
-                file: r.data.file,
-            });
-        } else {
-            pod = new Pad.Reader.Pod({
-                title: r.data.name,
-                release: r.data.release,
-                file: r.data.file,
-            });
-        }
-        Pad.UI.TabPanel.add(pod);
-        this.close();
     }
-});
-
-new Ext.KeyMap(document, {
-    key: "m",
-    crtl: true,
-    alt: true,
-    fn: function(a, e) {
-        (new Pad.Reader.GoTo()).show();
-        e.preventDefault();
-    },
 });

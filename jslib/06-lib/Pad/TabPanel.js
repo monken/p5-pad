@@ -11,13 +11,12 @@ Pad.TabPanel = Ext.extend(Ext.TabPanel, {
         var found;
         if(this.items) this.items.each(function(item) {
             if(item.xtype != c.xtype) return;
-            if(item.file == c.file) {
+            if(item[item.identifier] == c[c.identifier]) {
                 found = item;
                 return false;
             }
         });
         if(found) return this.activate(found);
-        
         var comp = Pad.TabPanel.superclass.add.call(this, c);
         if(!Ext.isArray(comp)) comp.on('close', function(tab) {
             Pad.UI.FilesPanel.remove(tab);
@@ -25,13 +24,14 @@ Pad.TabPanel = Ext.extend(Ext.TabPanel, {
         });
         if(this.rendered) this.activate(c);
         
-        
-        this.loadPortlets(c);
+        this.loadPortlets(Ext.isArray(c) ? c[0] : c, Ext.isArray(c) ? false : true);
     },
-    loadPortlets: function(c) {
-        if(c.title) {
-            Pad.UI.FilesPanel.add(new Pad.Files({module: c.title, release: c.release}));
-            Pad.UI.RelatedPanel.add(new Pad.RelatedModules({module: c.title, file: c.file}));
+    loadPortlets: function(c, count) {
+        if(c.loaded) {
+            Pad.UI.FilesPanel.add({author: c.author, release: c.release, xtype: 'padfiles' }, count);
+            Pad.UI.RelatedPanel.add({author: c.author, release: c.release, xtype: 'padrelated' }, count);
+        } else {
+            c.on('load', this.loadPortlets.createDelegate(this, [c, count]));
         }
     },
     initEvents: function() {
