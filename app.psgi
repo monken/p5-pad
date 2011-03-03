@@ -26,13 +26,18 @@ builder {
     <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
     <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
     <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushPerl.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://cdn.simplegeo.com/js/1.2/simplegeo.context.min.js"></script>
+    <script src="http://maps.google.com/maps?file=api&v=3.x&key=ABQIAAAA2CKu_qQN-JHtlfQ5L7BLlRT2yXp_ZAY8_ufC3CFXhHIE1NvwkxQl3I3p2yrGARYK4f4bkjp9NHpm5w" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="/static/Portal.css" />
     <link rel="stylesheet" type="text/css" href="/static/silk.css" />
     <link rel="stylesheet" type="text/css" href="/static/cpan.css" />
     <link rel="stylesheet" type="text/css" href="/static/pad.css" />
     <script type="text/javascript" src="$env->{'psgix.jsconcat.url'}"></script>
 </head>
-<body></body>
+<body><form id="history-form" class="x-hidden">
+    <input type="hidden" id="x-history-field" />
+    <iframe id="x-history-frame"></iframe>
+</form></body>
 </html>
 |
 ]] };

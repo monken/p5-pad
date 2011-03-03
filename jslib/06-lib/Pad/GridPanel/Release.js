@@ -6,13 +6,12 @@ Pad.GridPanel.Release = Ext.extend(Pad.GridPanel, {
     cm: [
     {
         header: "Release",
-        width: 180,
+        width: 220,
         sortable: true,
         dataIndex: 'name'
     },
     {
         header: "Abstract",
-        width: 150,
         sortable: true,
         dataIndex: 'abstract',
         id: 'abstract'
@@ -20,24 +19,37 @@ Pad.GridPanel.Release = Ext.extend(Pad.GridPanel, {
     {
         header: "Distribution",
         hidden: true,
-        id: 'distribution'
+        dataIndex: 'distribution',
     },
     {
         header: "",
         width: 70,
         sortable: true,
         dataIndex: 'none',
+        align: 'center',
+        renderer: function(value, s,r) { return '<a href="' + r.data.download_url + '">Download</a>' }
+    },
+    {
+        header: "Date",
+        hidden: true,
+        dataIndex: 'day',
+        renderer: Ext.util.Format.dateRenderer("l, jS F Y")
     },
     {
         header: "Released",
         width: 120,
         sortable: true,
         dataIndex: 'date',
-        renderer: Util.dateRenderer
+        renderer: Util.dateTimeRenderer
     },
     ],
-    fields: ['name', 'abstract', 'date', 'distribution'],
-    groupField: 'distribution'
+    fields: ['day', 'name', 'abstract', 'date', 'distribution', 'download_url'],
+    
+    onRowDblClick: function(grid, index, e) {
+        var row = this.getStore().getAt(index);
+        var module = row.get('distribution').replace(/-/g, '::');
+        Pad.UI.TabPanel.add(new Pad.Reader.Pod({ title: module }));
+    },
 });
 
 Ext.reg('padgridpanelrelease', Pad.GridPanel.Release);

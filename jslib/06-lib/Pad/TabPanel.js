@@ -4,17 +4,21 @@ Pad.TabPanel = Ext.extend(Ext.TabPanel, {
     style:'padding:10px 0px 10px 0px',
     id: 'pad-reader',
     enableTabScroll: true,
-    bbar:[{}],
+    //bbar:[{}],
     activeItem: 0, 
     plain: true,
     add: function(c) {
         var found;
         if(this.items) this.items.each(function(item) {
             if(item.xtype != c.xtype) return;
-            if(item[item.identifier] == c[c.identifier]) {
-                found = item;
-                return false;
+            if(!Ext.isArray(item.identifier)) item.identifier = [item.identifier];
+            for(var i = 0; i < item.identifier.length; i++) {
+                if(item[item.identifier[i]] != c[c.identifier[i]]) {
+                    return;
+                }
             }
+            found = item;
+            return false;
         });
         if(found) return this.activate(found);
         var comp = Pad.TabPanel.superclass.add.call(this, c);
@@ -23,7 +27,6 @@ Pad.TabPanel = Ext.extend(Ext.TabPanel, {
             Pad.UI.RelatedPanel.remove(tab);
         });
         if(this.rendered) this.activate(c);
-        
         this.loadPortlets(Ext.isArray(c) ? c[0] : c, Ext.isArray(c) ? false : true);
     },
     loadPortlets: function(c, count) {

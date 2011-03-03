@@ -1,56 +1,159 @@
 var Release;
 Release = {
-    byAuthor: function(param, cb) {
-            Ext.Ajax.request({
-                url: '/api/release/_search',
-                jsonData: {
-                    size: param.limit || 50,
-                    from: param.start || 0,
-                    query: { match_all: {}},
-                    filter: {
-                            term: {
-                                author: param.author,
-                            }
-                    },
-                    sort: ['distribution', { 'version_numified': { reverse: true}}],
-                    fields: ['name', 'version', 'abstract', 'date', 'distribution']
+    documentation: function(param, cb) {
+        Ext.Ajax.request({
+            url: '/api/file/_search',
+            jsonData: {
+                size: param.limit || 50,
+                from: param.start || 0,
+                query: {
+                    match_all: {}
                 },
-                success: function(res) {
-                    var deps = Ext.decode(res.responseText);
-                    var hits = deps.hits.hits;
-                    var result = [];
-                    for (var i = 0; i < hits.length; i++) {
-                        result.push(hits[i].fields);
-                    }
-                    cb({ data: result, total: deps.hits.total });
+                filter: {
+                    and: [{
+                        term: {
+                            release: param.release
+                        }
+                    },{
+                        term: {
+                            author: param.author
+                        }
+                    },{
+                        term: {
+                            indexed: true
+                        }
+                    },{
+                    not: {
+                        filter: {
+                            missing: {
+                                field: "pod"
+                            }
+                        }
+                    }}]
+                },
+                sort: ['module'],
+                fields: ['module', 'name', 'path', 'id', 'release', 'author']
+            },
+            success: function(res) {
+                var deps = Ext.decode(res.responseText);
+                var hits = deps.hits.hits;
+                var result = [];
+                for (var i = 0; i < hits.length; i++) {
+                    result.push(hits[i].fields);
                 }
-            });
+                cb({
+                    data: result,
+                    total: deps.hits.total
+                });
+            }
+        });
+
+    },
+    recent: function(param, cb) {
+        Ext.Ajax.request({
+            url: '/api/release/_search',
+            jsonData: {
+                size: param.limit || 50,
+                from: param.start || 0,
+                query: {
+                    match_all: {}
+                },
+                sort: [{
+                    'date': {
+                        reverse: true
+                    }
+                }],
+                fields: ['name', 'version', 'abstract', 'date', 'distribution', 'download_url']
+            },
+            success: function(res) {
+                var deps = Ext.decode(res.responseText);
+                var hits = deps.hits.hits;
+                var result = [];
+                for (var i = 0; i < hits.length; i++) {
+                    hits[i].fields.day = Date.parseDate(hits[i].fields.date, "c");
+                    result.push(hits[i].fields);
+                }
+                cb({
+                    data: result,
+                    total: deps.hits.total
+                });
+            }
+        });
+    },
+    byAuthor: function(param, cb) {
+        Ext.Ajax.request({
+            url: '/api/release/_search',
+            jsonData: {
+                size: param.limit || 50,
+                from: param.start || 0,
+                query: {
+                    match_all: {}
+                },
+                filter: {
+                    term: {
+                        author: param.author,
+                    }
+                },
+                sort: ['distribution', {
+                    'version_numified': {
+                        reverse: true
+                    }
+                }],
+                fields: ['name', 'version', 'abstract', 'date', 'distribution']
+            },
+            success: function(res) {
+                var deps = Ext.decode(res.responseText);
+                var hits = deps.hits.hits;
+                var result = [];
+                for (var i = 0; i < hits.length; i++) {
+                    result.push(hits[i].fields);
+                }
+                cb({
+                    data: result,
+                    total: deps.hits.total
+                });
+            }
+        });
     },
     dependencies: function(param, cb) {
-            Ext.Ajax.request({
-                url: '/api/dependency/_search',
-                jsonData: {
-                    size: 1000,
-                    query: { match_all: {}},
-                    filter: {
-                            term: {
-                                author: param.author,
-                                release: param.release
-                            }
-                    },
-                    sort: ['module'],
-                    fields: ['module', 'version']
+        Ext.Ajax.request({
+            url: '/api/dependency/_search',
+            jsonData: {
+                size: 1000,
+                query: {
+                    match_all: {}
                 },
-                success: function(res) {
-                    var deps = Ext.decode(res.responseText);
-                    var hits = deps.hits.hits;
-                    var result = [];
-                    for (var i = 0; i < hits.length; i++) {
-                        result.push(hits[i].fields);
-                    }
-                    cb(result);
+                filter: {
+                    and: [{
+                        term: {
+                            author: param.author,
+                        }
+                    },
+                    {
+                        term: {
+                            release: param.release,
+                        }
+                    },
+                    {
+                        term: {
+                            phase: 'runtime',
+                        }
+                    },
+                    ]
+                },
+                sort: ['module'],
+                fields: ['module', 'version']
+            },
+            success: function(res) {
+                var deps = Ext.decode(res.responseText);
+                var hits = deps.hits.hits;
+                var result = [];
+                for (var i = 0; i < hits.length; i++) {
+                    result.push(hits[i].fields);
                 }
-            });
+                cb(result);
+            }
+        });
     },
     files: function(param, cb) {
         Ext.Ajax.request({

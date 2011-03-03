@@ -6,6 +6,7 @@ Pad.Reader.TOC.Pod = Ext.extend(Ext.Container, {
     },
     buildTree: function(html) {
         var toc = [];
+        if(!html) return toc;
         for(var i = 0; i < html.children.length; i++) {
             var child = html.children[i];
             var item = { text: child.firstChild.innerHTML, id: child.firstChild.getAttribute('href').replace(/#/, "") };

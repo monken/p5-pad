@@ -16,7 +16,7 @@ Pad.Reader.Source.Code = Ext.extend(Pad.Reader.Source, {
         }
     }],
     load: function() {
-        Module.code(this.title, this.onLoad.createDelegate(this));
+        Module.code({ author: this.author, release: this.release, path: this.path }, this.onLoad.createDelegate(this));
     },
     onLoad: function(res) {
         var tb = this.getTopToolbar();

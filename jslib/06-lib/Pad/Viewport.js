@@ -1,28 +1,14 @@
-
-Ext.ns('Pad.Singelton');
-
-Ext.onReady(function(){
-    Ext.QuickTips.init();
-
-    var tools = [{
-        id:'close',
-        handler: function(e, target, panel){
-            panel.ownerCt.remove(panel, true);
-        }
-    }];
+Pad.Viewport = Ext.extend(Ext.Viewport, {
+    layout:'border',
+    frame: false,
+    defaults: { bodyStyle: 'background-color: #e8f0Fe;', bodyCssClass: 'pad-no-scroll-x', border: false, autoScroll: false },
     
-    Pad.UI = {};
-    Pad.UI.FilesPanel = new Pad.FilesPanel({items: [] });
-    Pad.UI.RelatedPanel = new Pad.RelatedPanel();
-    Pad.UI.TabPanel = new Pad.TabPanel({
-        items: [new Pad.Author({title: 'CORNELIUS'})]
-    });
-    
-    var viewport = new Ext.Viewport({
-        layout:'border',
-        frame: false,
-        defaults: { bodyStyle: 'background-color: #e8f0Fe;', bodyCssClass: 'pad-no-scroll-x', border: false, autoScroll: false },
-        items:[/*{
+    initComponent: function() {
+        this.FilesPanel = new Pad.FilesPanel({items: [] });
+        this.RelatedPanel = new Pad.RelatedPanel();
+        this.TabPanel = new Pad.TabPanel();
+        
+        this.items = [/*{
             xtype:'portal',
             region:'west',
             width: 200,
@@ -67,7 +53,7 @@ Ext.onReady(function(){
                                 });
                             }
                         }
-                        
+
                     },{
                         title:'Recent',
                         html: 'foo',
@@ -99,32 +85,33 @@ Ext.onReady(function(){
                 style: 'padding-left: 10px',
                 layout: 'fit',
                 border:false,
-                items: [ Pad.UI.TabPanel ]
+                items: [ this.TabPanel ]
             },{
             xtype:'portal',
             region:'east',
-            width: 200,
+            width: 250,
             items:[{
-                width:200,
+                width:250,
                 style:'padding:10px',
-                items:[ Pad.UI.FilesPanel
-                ,
-                 Pad.UI.RelatedPanel 
+                items:[ 
+                this.FilesPanel,
+                this.RelatedPanel 
                  ]
             }]
-            
+
             /*
              * Uncomment this block to test handling of the drop event. You could use this
              * to save portlet position state for example. The event arg e is the custom 
              * event defined in Ext.ux.Portal.DropZone.
              */
-//            ,listeners: {
-//                'drop': function(e){
-//                    Ext.Msg.alert('Portlet Dropped', e.panel.title + '<br />Column: ' + 
-//                        e.columnIndex + '<br />Position: ' + e.position);
-//                }
-//            }
-        }]
-    });
+    //            ,listeners: {
+    //                'drop': function(e){
+    //                    Ext.Msg.alert('Portlet Dropped', e.panel.title + '<br />Column: ' + 
+    //                        e.columnIndex + '<br />Position: ' + e.position);
+    //                }
+    //            }
+        }];
+        
+        Pad.Viewport.superclass.initComponent.call(this, arguments);
+    },
 });
-

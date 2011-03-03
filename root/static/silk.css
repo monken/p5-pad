@@ -190,4 +190,4 @@
 .silk-wrench { background-image: url(fam/wrench.png) !important; background-repeat: no-repeat; }
 .silk-world { background-image: url(fam/world.png) !important; background-repeat: no-repeat; }
 .silk-zoom { background-image: url(fam/zoom.png) !important; background-repeat: no-repeat; }
-.silk-loading { background-image: url(extjs/images/default/tree/loading.gif) !important; background-repeat: no-repeat; }
+.silk-loading { background-image: url(http://extjs.cachefly.net/ext-3.3.1/resources/images/default/tree/loading.gif) !important; background-repeat: no-repeat; }

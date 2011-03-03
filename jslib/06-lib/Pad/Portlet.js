@@ -1,0 +1,1 @@
+Pad.Portlet = Ext.extend(Ext.Panel, {});

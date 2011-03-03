@@ -1,11 +1,10 @@
-Ext.ns('Pad.Files');
 Pad.Files = Ext.extend(Ext.tree.TreePanel, {
     autoScroll: true,
     rootVisible: true,
     anchor: '100%',
     animate: false,
     xtype: 'padfiles',
-    references: 1,
+    references: 0,
     cls: 'x-portlet',
     initComponent: function() {
         var that = this;
@@ -58,19 +57,19 @@ Pad.Files = Ext.extend(Ext.tree.TreePanel, {
             title: node.attributes.module,
             release: this.release,
             author: this.author,
-            file: file,
+            path: file,
         });
         else if (node.attributes.module) pod = new Pad.Reader.Source.Code({
             title: node.attributes.module,
             release: this.release,
             author: this.author,
-            file: file,
+            path: file,
         });
         else pod = new Pad.Reader.Source({
             title: node.attributes.text,
             author: this.author,
             release: this.release,
-            file: file,
+            path: file,
         });
         Pad.UI.TabPanel.add(pod);
 

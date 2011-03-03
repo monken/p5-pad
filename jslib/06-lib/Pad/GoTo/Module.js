@@ -8,13 +8,13 @@ Pad.GoTo.Module = Ext.extend(Pad.GoTo, {
             pod = new Pad.Reader.Source.Code({
                 title: r.data.name,
                 release: r.data.release,
-                file: r.data.file,
+                path: r.data.path,
             });
         } else {
             pod = new Pad.Reader.Pod({
                 title: r.data.name,
                 release: r.data.release,
-                file: r.data.file,
+                path: r.data.path,
             });
         }
         Pad.UI.TabPanel.add(pod);

@@ -12,7 +12,7 @@ Pad.Reader.Source = Ext.extend(Pad.Reader, {
         this.load();
     },
     load: function() {
-        File.source(this.author, this.release, this.file, this.onLoad.createDelegate(this));
+        File.source(this.author, this.release, this.path, this.onLoad.createDelegate(this));
     },
     onLoad: function(res) {
         Pad.Reader.Source.superclass.onLoad.call(this, res);

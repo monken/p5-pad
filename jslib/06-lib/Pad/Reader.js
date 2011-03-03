@@ -4,7 +4,7 @@ Pad.Reader = Ext.extend(Ext.Panel, {
     title: 'Pad.Reader',
     xtype: 'padreader',
     loaded: false,
-    identifier: 'release',
+    identifier: ['author','release','path'],
     scrollCache: {
         top: 0,
         left: 0
@@ -38,12 +38,12 @@ Pad.Reader = Ext.extend(Ext.Panel, {
         this.setIconClass(this.oldIconCls);
         if(res) {
             
-            if(!this.file) this.file = res.file;
+            if(!this.path) this.path = res.path;
             if(!this.release) this.release = res.release;
             if(!this.author) this.author = res.author;
-            Ext.fly(this.ownerCt.getTabEl(this)).child('span.x-tab-strip-text', true).qtip = [this.author, this.release, this.file].join("/");
+            Ext.fly(this.ownerCt.getTabEl(this)).child('span.x-tab-strip-text', true).qtip = [this.author, this.release, this.path].join("/");
         } else {
-            this.file = this.title;
+            this.path = this.title;
             this.body.update('Not Found');
         }
         this.loaded = true;

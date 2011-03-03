@@ -8,10 +8,18 @@ Pad.GridPanel = Ext.extend(Ext.grid.GridPanel, {
             limit: 50
         },
         root: 'data',
-        groupOnSort: true,
+        //groupOnSort: true,
         groupField: 'distribution',
     },
+    buildFields: function() {
+        var fields = [];
+        for(var i = 0; i < this.cm.length; i++) {
+            fields.push(this.cm[i].dataIndex);
+        }
+        return fields;
+    },
     initComponent: function() {
+        if(!this.fields) this.fields = this.buildFields();
         Ext.apply(this.store, {
             listeners: {
                 exception: this.onException.createDelegate(this)
@@ -19,10 +27,14 @@ Pad.GridPanel = Ext.extend(Ext.grid.GridPanel, {
             reader: new Ext.data.JsonReader({fields: this.fields}),
             proxy: new Pad.DataProxy({
                 api: this.api
-            })
+            }),
+            groupField: this.groupField,
+            sortInfo: this.sortInfo,
+            baseParams: { fields: this.fields }
         });
         this.store = new Ext.data.GroupingStore(this.store);
-        if (this.cm[0].id != 'numberer') this.cm.unshift(new Ext.grid.RowNumberer());
+        this.view = new Ext.grid.GroupingView();
+        if (this.cm[0].id != 'numberer') this.cm.unshift(new Ext.grid.RowNumberer({ width: 28 }));
         Ext.apply(this, {
             region: 'center',
             cm: new Ext.grid.ColumnModel(this.cm),
@@ -41,14 +53,11 @@ Pad.GridPanel = Ext.extend(Ext.grid.GridPanel, {
         this.getStore().load();
     },
     initEvents: function() {
-        this.on('rowdblclick', this.onRowDblClick, this);
+        this.store.on('load', this.onLoad, this);
 
     },
-    onRowDblClick: function(grid, index, e) {
-        var row = this.getStore().getAt(index);
-        var form = new this.form;
-        form.on('submit', this.store.reload.createDelegate(this.store));
-        form.load(row.get('id'));
+    onLoad: function(store) {
+        
     },
     onException: function(proxy, type, action, options, response, arg) {
         Ext.Msg.show({

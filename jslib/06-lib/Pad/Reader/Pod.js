@@ -20,7 +20,7 @@ Pad.Reader.Pod = Ext.extend(Pad.Reader, {
                 title: this.ownerCt.ownerCt.title,
                 release: this.ownerCt.ownerCt.release,
                 author: this.ownerCt.ownerCt.author,
-                file: this.ownerCt.ownerCt.file,
+                path: this.ownerCt.ownerCt.path,
                 
             });
             Pad.UI.TabPanel.add(pod);
@@ -58,7 +58,7 @@ Pad.Reader.Pod = Ext.extend(Pad.Reader, {
     onRender: function(tab) {
         Pad.Reader.Pod.superclass.onRender.call(this, tab);
         var that = this;
-        Module.pod(this.title, this.onLoad.createDelegate(this));
+        Module.pod({ file_id: this.file_id, author: this.author, release: this.release, path: this.path, name: this.name || this.title }, this.onLoad.createDelegate(this));
         this.toc.body = this.body;
     },
     onLoad: function(res) {
