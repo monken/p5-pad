@@ -3,6 +3,7 @@ Ext.ns('Pad.Reader.Pod');
 Pad.Reader.Pod = Ext.extend(Pad.Reader, {
     title: 'Pad.Reader',
     autoScroll: true,
+    controller: 'pod',
     iconCls: 'silk-package',
     padding: '5px 5px 5px 25px',
     xtype: 'padreaderpod',

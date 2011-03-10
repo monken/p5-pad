@@ -1,5 +1,29 @@
 Ext.ns('Pad');
 var Util = {
+    loadPage: function(page) {
+        var parts = page.split(/\//);
+        parts.shift();
+        if (parts[0] == 'mirrors') {
+            Pad.UI.TabPanel.add(new Pad.Mirrors);
+        } else if (parts[0] == 'recent') {
+            Pad.UI.TabPanel.add(new Pad.Recent);
+        } else if (parts[0] == 'pod' && parts.length > 3) {
+            parts.shift();
+            Pad.UI.TabPanel.add(new Pad.Reader.Pod({
+                author: parts.shift(),
+                release: parts.shift(),
+                path: parts.join("/"),
+            }));
+        } else if (parts[0] == 'pod' && parts.length == 2) {
+            Pad.UI.TabPanel.add(new Pad.Reader.Pod({
+                title: parts[1]
+            }));
+        } else if (parts[0] == 'author') {
+            Pad.UI.TabPanel.add(new Pad.Author({
+                title: parts[1]
+            }));
+        }
+    },
     location: null,
     getLocation: function(cb) {
         if(Util.location) return cb(Util.location);

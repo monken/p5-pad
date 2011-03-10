@@ -1,6 +1,6 @@
 Ext.ns('Pad.Reader');
 
-Pad.Reader = Ext.extend(Ext.Panel, {
+Pad.Reader = Ext.extend(Pad.Panel, {
     title: 'Pad.Reader',
     xtype: 'padreader',
     loaded: false,
@@ -10,6 +10,7 @@ Pad.Reader = Ext.extend(Ext.Panel, {
         left: 0
     },
     initComponent: function() {
+        if(this.path) this.title = this.path;
         Pad.Reader.superclass.initComponent.call(this, arguments);
         this.initEvents();
     },
@@ -21,6 +22,12 @@ Pad.Reader = Ext.extend(Ext.Panel, {
         this.ownerCt.on('beforetabchange', this.onDeactivate, this);
         this.on('activate', this.onActivate, this);
 
+    },
+    setToken: function() {
+        if(!this.loaded) return this.on('load', this.setToken, this);
+        Ext.History.add(
+            "/" + [this.controller, this.author, this.release, this.path].join("/")
+        );
     },
     onDeactivate: function(tab, newtab, oldtab) {
         if (!oldtab || oldtab != this) return;
@@ -37,11 +44,9 @@ Pad.Reader = Ext.extend(Ext.Panel, {
     onLoad: function(res) {
         this.setIconClass(this.oldIconCls);
         if(res) {
-            
-            if(!this.path) this.path = res.path;
-            if(!this.release) this.release = res.release;
-            if(!this.author) this.author = res.author;
+            Ext.copyTo(this, res, ['path', 'release', 'author', 'module']);
             Ext.fly(this.ownerCt.getTabEl(this)).child('span.x-tab-strip-text', true).qtip = [this.author, this.release, this.path].join("/");
+            this.setTitle(this.module || this.path);
         } else {
             this.path = this.title;
             this.body.update('Not Found');

@@ -1,7 +1,9 @@
-Pad.Author = Ext.extend(Ext.Panel, {
+Pad.Author = Ext.extend(Pad.Panel, {
     iconCls: 'silk-user',
     layout: 'border',
-    identifier: 'title',
+    identifier: ['title'],
+    xtype: 'padauthor',
+    controller: 'author',
     overview: {
         region: 'north',
         xtype: 'panel',
@@ -21,5 +23,8 @@ Pad.Author = Ext.extend(Ext.Panel, {
         this.items = [Ext.ComponentMgr.create(this.overview), grid],
         grid.store.setBaseParam('author', this.title);
         Pad.Author.superclass.initComponent.call(this, arguments);
+    },
+    setToken: function() {
+        Ext.History.add(["", this.controller, this.title].join("/"));
     }
 });

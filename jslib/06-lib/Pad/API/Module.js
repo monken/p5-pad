@@ -3,7 +3,7 @@ Module = {
     list: function() {},
     get: function(module, cb) {
         Ext.Ajax.request({
-            url: '/api/module/' + module,
+            url: API.url + '/module/' + module,
             success: function(res) {
                 var obj = Ext.decode(res.responseText);
                 cb(obj);
@@ -16,16 +16,16 @@ Module = {
         });
         var reqs = 0;
         Ext.Ajax.request({
-            url: '/api/file/' + [param.author, param.release, param.path].join("/"),
+            url: API.url + '/file/' + [param.author, param.release, param.path].join("/"),
             success: function(res) {
                 var file = Ext.decode(res.responseText);
-                Ext.copyTo(param, file, ['toc']);
+                Ext.copyTo(param, file, ['toc', 'module']);
                 reqs++;
                 if (reqs == 2) cb(param);
             }
         });
         Ext.Ajax.request({
-            url: '/api/pod/' + [param.author, param.release, param.path].join("/"),
+            url: API.url + '/pod/' + [param.author, param.release, param.path].join("/"),
             success: function(res) {
                 param.html = res.responseText;
                 reqs++;
@@ -40,7 +40,7 @@ Module = {
 
         var reqs = 0;
         Ext.Ajax.request({
-            url: '/api/file/' + [param.author, param.release, param.path].join("/"),
+            url: API.url + '/file/' + [param.author, param.release, param.path].join("/"),
             success: function(res) {
                 var file = Ext.decode(res.responseText);
                 Ext.copyTo(param, file, ['sloc', 'slop', 'pod_lines', 'stat']);
@@ -49,7 +49,7 @@ Module = {
             }
         });
         Ext.Ajax.request({
-            url: '/api/source/' + [param.author, param.release, param.path].join("/"),
+            url: API.url + '/source/' + [param.author, param.release, param.path].join("/"),
             success: function(res) {
                 param.source = res.responseText;
                 reqs++;
@@ -74,7 +74,7 @@ Module = {
             }
         });
         Ext.Ajax.request({
-            url: '/api/module/_search',
+            url: API.url + '/module/_search',
             jsonData: {
                 query: {
                     match_all: {}

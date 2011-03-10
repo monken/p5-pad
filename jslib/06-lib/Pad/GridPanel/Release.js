@@ -44,7 +44,10 @@ Pad.GridPanel.Release = Ext.extend(Pad.GridPanel, {
     },
     ],
     fields: ['day', 'name', 'abstract', 'date', 'distribution', 'download_url'],
-    
+    initEvents: function() {
+        this.on('rowdblclick', this.onRowDblClick, this);
+        Pad.GridPanel.Release.superclass.initEvents.call(this, arguments);
+    },
     onRowDblClick: function(grid, index, e) {
         var row = this.getStore().getAt(index);
         var module = row.get('distribution').replace(/-/g, '::');

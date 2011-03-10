@@ -11,7 +11,6 @@ Pad.TabPanel = Ext.extend(Ext.TabPanel, {
         var found;
         if(this.items) this.items.each(function(item) {
             if(item.xtype != c.xtype) return;
-            if(!Ext.isArray(item.identifier)) item.identifier = [item.identifier];
             for(var i = 0; i < item.identifier.length; i++) {
                 if(item[item.identifier[i]] != c[c.identifier[i]]) {
                     return;
@@ -44,6 +43,7 @@ Pad.TabPanel = Ext.extend(Ext.TabPanel, {
     },
     onTabChange: function(panel, c) {
         if(c) this.loadPortlets(c);
+        c.setToken();
     },
     proxyLink: function(link) {
         return false;

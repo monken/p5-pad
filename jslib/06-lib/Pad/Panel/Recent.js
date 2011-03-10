@@ -1,4 +1,4 @@
-Pad.Recent = Ext.extend(Ext.Panel, {
+Pad.Recent = Ext.extend(Pad.Panel, {
     title: 'Recent',
     layout: 'border',
     iconCls:'silk-new',

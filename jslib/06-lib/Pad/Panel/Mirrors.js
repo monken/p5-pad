@@ -1,22 +1,19 @@
-Pad.Mirrors = Ext.extend(Ext.Panel, {
-    iconCls: 'silk-user',
+Pad.Mirrors = Ext.extend(Pad.Panel, {
+    iconCls: 'silk-server',
     layout: 'border',
     title: 'Mirrors',
-    identifier: 'title',
     map: {
         xtype: 'gmappanel',
         region: 'south',
         split: true,
-        zoomLevel: 5,
+        zoomLevel: 1,
         height: 300,
         gmapType: 'map',
         mapConfOpts: ['enableScrollWheelZoom', 'enableDoubleClickZoom', 'enableDragging'],
         mapControls: ['GSmallMapControl', 'GMapTypeControl', 'NonExistantControl'],
         setCenter: {
-            geoCodeAddr: '4 Yawkey Way, Boston, MA, 02215-3409, USA',
-            marker: {
-                title: 'Fenway Park'
-            }
+            lat: 0,
+            lng: 0
         }
     },
     grid: {
@@ -48,16 +45,16 @@ Pad.Mirrors = Ext.extend(Ext.Panel, {
         var mePoint = new GLatLng(me.coords.latitude, me.coords.longitude);
         var blueIcon = new GIcon(G_DEFAULT_ICON);
         blueIcon.image = "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png";
-
+        this.map.zoomLevel = 5;
         this.map.addMarker(mePoint, {
             icon: blueIcon
-        },
-        true, true);
+        }, true, true);
         for (var i = 0; i < records.length; i++) {
             var data = records[i].data;
             var loc = data.location.split(/,/);
             var point = new GLatLng(loc[0], loc[1])
             this.map.addMarker(point);
         }
+
     },
 });

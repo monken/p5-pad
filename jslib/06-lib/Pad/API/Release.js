@@ -2,7 +2,7 @@ var Release;
 Release = {
     documentation: function(param, cb) {
         Ext.Ajax.request({
-            url: '/api/file/_search',
+            url: API.url + '/file/_search',
             jsonData: {
                 size: param.limit || 50,
                 from: param.start || 0,
@@ -14,22 +14,26 @@ Release = {
                         term: {
                             release: param.release
                         }
-                    },{
+                    },
+                    {
                         term: {
                             author: param.author
                         }
-                    },{
+                    },
+                    {
                         term: {
                             indexed: true
                         }
-                    },{
-                    not: {
-                        filter: {
-                            missing: {
-                                field: "pod"
+                    },
+                    {
+                        not: {
+                            filter: {
+                                missing: {
+                                    field: "pod"
+                                }
                             }
                         }
-                    }}]
+                    }]
                 },
                 sort: ['module'],
                 fields: ['module', 'name', 'path', 'id', 'release', 'author']
@@ -51,7 +55,7 @@ Release = {
     },
     recent: function(param, cb) {
         Ext.Ajax.request({
-            url: '/api/release/_search',
+            url: API.url + '/release/_search',
             jsonData: {
                 size: param.limit || 50,
                 from: param.start || 0,
@@ -82,7 +86,7 @@ Release = {
     },
     byAuthor: function(param, cb) {
         Ext.Ajax.request({
-            url: '/api/release/_search',
+            url: API.url + '/release/_search',
             jsonData: {
                 size: param.limit || 50,
                 from: param.start || 0,
@@ -117,7 +121,7 @@ Release = {
     },
     dependencies: function(param, cb) {
         Ext.Ajax.request({
-            url: '/api/dependency/_search',
+            url: API.url + '/dependency/_search',
             jsonData: {
                 size: 1000,
                 query: {
@@ -157,18 +161,27 @@ Release = {
     },
     files: function(param, cb) {
         Ext.Ajax.request({
-            url: '/api/file/_search',
+            url: API.url + '/file/_search',
             jsonData: {
                 size: 1000,
                 query: {
-                    field: {
-                        level: param.level
+                    match_all: {
+
                     }
                 },
                 filter: {
                     and: [{
                         term: {
-                            author: param.author,
+                            level: param.level
+                        }
+                    },
+                    {
+                        term: {
+                            author: param.author
+                        }
+                    },
+                    {
+                        term: {
                             release: param.release
                         }
                     },

@@ -21,7 +21,7 @@ var Mirror = {
             });
         });
         Ext.Ajax.request({
-            url: '/api/mirror/_search',
+            url: API.url + '/mirror/_search',
             jsonData: {
                 size: param.limit || 50,
                 from: param.start || 0,

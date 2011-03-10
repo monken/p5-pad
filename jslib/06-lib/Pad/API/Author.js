@@ -2,7 +2,7 @@ var Author;
 Author = {
     search: function(params, cb) {
         Ext.Ajax.request({
-            url: '/api/author/_search',
+            url: API.url + '/author/_search',
             jsonData: {
                 "size": 20,
                 "fields": ['pauseid', 'name'],

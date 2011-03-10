@@ -7,8 +7,8 @@ Pad.Viewport = Ext.extend(Ext.Viewport, {
         this.FilesPanel = new Pad.FilesPanel({items: [] });
         this.RelatedPanel = new Pad.RelatedPanel();
         this.TabPanel = new Pad.TabPanel();
-        
-        this.items = [/*{
+        var tools = [];
+        this.items = [{
             xtype:'portal',
             region:'west',
             width: 200,
@@ -30,9 +30,6 @@ Pad.Viewport = Ext.extend(Ext.Viewport, {
                     tools: tools,
                     iconCls:'silk-wrench',
                     layout:'accordion',
-                    layoutConfig:{
-                        animate:true
-                    },
                     items: [{
                         html: 'None',
                         title:'Favorites',
@@ -80,7 +77,7 @@ Pad.Viewport = Ext.extend(Ext.Viewport, {
                     iconCls: 'silk-rss',
                     items: [{html: 'News Item I'}]
             }]
-            }]},*/{
+            }]},{
                 region: 'center',
                 style: 'padding-left: 10px',
                 layout: 'fit',

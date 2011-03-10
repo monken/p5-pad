@@ -3,6 +3,7 @@ Ext.ns('Pad.Reader.Source');
 Pad.Reader.Source = Ext.extend(Pad.Reader, {
     title: 'Pad.Reader',
     xtype: 'padreadersource',
+    controller: 'source',
     autoScroll: true,
     iconCls: 'silk-page-white-code',
     closable: true,

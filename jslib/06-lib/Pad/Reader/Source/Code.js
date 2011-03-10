@@ -5,6 +5,7 @@ Pad.Reader.Source.Code = Ext.extend(Pad.Reader.Source, {
     autoScroll: true,
     iconCls: 'silk-page-white-code',
     xtype: 'padreadersourcecode',
+    controller: 'code',
     closable: true,
     tbar: [{
         text: 'Strip POD',
