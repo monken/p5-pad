@@ -62,10 +62,7 @@ Ext.ux.GMapPanel = Ext.extend(Ext.Panel, {
                 this.gmap.setLocationAndPOV(new GLatLng(this.setCenter.lat,this.setCenter.lng), {yaw: this.yaw, pitch: this.pitch, zoom: this.zoom});
             }
         }
-
-        GEvent.bind(this.gmap, 'load', this, function(){
-            this.onMapReady();
-        });
+        this.onMapReady();
 
     },
     onMapReady : function(){

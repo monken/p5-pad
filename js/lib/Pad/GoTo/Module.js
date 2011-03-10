@@ -24,9 +24,11 @@ Pad.GoTo.Module = Ext.extend(Pad.GoTo, {
 
 new Ext.KeyMap(document, {
     key: "m",
-    crtl: true,
-    alt: true,
+    ctrl: false,
+    shift: false,
+    alt: false,
     fn: function(a, e) {
+        if(e.target.tagName == 'INPUT') return;
         (new Pad.GoTo.Module()).show();
         e.preventDefault();
     }

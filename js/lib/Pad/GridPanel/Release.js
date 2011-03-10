@@ -8,18 +8,21 @@ Pad.GridPanel.Release = Ext.extend(Pad.GridPanel, {
         header: "Release",
         width: 220,
         sortable: true,
-        dataIndex: 'name'
+        dataIndex: 'name',
+        renderer: Ext.util.Format.htmlEncode
     },
     {
         header: "Abstract",
         sortable: true,
         dataIndex: 'abstract',
-        id: 'abstract'
+        id: 'abstract',
+        renderer: Ext.util.Format.htmlEncode
     },
     {
         header: "Distribution",
         hidden: true,
         dataIndex: 'distribution',
+        renderer: Ext.util.Format.htmlEncode
     },
     {
         header: "",

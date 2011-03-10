@@ -1,0 +1,1 @@
+var API= { url: window.location.host && ( window.location.hostname != '127.0.0.1' && window.location.hostname != 'localhost') ? 'http://api.netcubed.de' : 'http://localhost:5000' };

@@ -7,6 +7,8 @@ var Util = {
             Pad.UI.TabPanel.add(new Pad.Mirrors);
         } else if (parts[0] == 'recent') {
             Pad.UI.TabPanel.add(new Pad.Recent);
+        } else if (parts[0] == 'home') {
+            Pad.UI.TabPanel.add(new Pad.Home);
         } else if (parts[0] == 'pod' && parts.length > 3) {
             parts.shift();
             Pad.UI.TabPanel.add(new Pad.Reader.Pod({

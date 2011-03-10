@@ -1,1 +1,0 @@
-var API= { url: 'http://localhost:5000' };

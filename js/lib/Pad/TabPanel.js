@@ -52,10 +52,15 @@ Pad.TabPanel = Ext.extend(Ext.TabPanel, {
 
 new Ext.KeyMap(document, {
     key: "w",
-    ctrl: true,
-    alt: true,
-    fn: function() {
-        var tab = Ext.getCmp('pad-reader').getActiveTab();
-        Ext.getCmp('pad-reader').remove(tab, true);
+    ctrl: false,
+    alt: false,
+    shift: false,
+    fn: function(a, e) {
+        if(e.target.tagName == 'INPUT') return;
+        if(Pad.UI.TabPanel.items.items.length == 1) return;
+        var tab = Pad.UI.TabPanel.getActiveTab();
+        if(tab.xtype == 'padhome') return;
+        tab.fireEvent('close', tab);
+        Pad.UI.TabPanel.remove(tab, true);
     },
 });

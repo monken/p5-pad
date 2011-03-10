@@ -7,7 +7,7 @@ Ext.onReady(function() {
         if (token) {
             Util.loadPage(token);
         } else {
-            console.log("init", token);
+            // console.log("init", token);
         }
     });
     var hash = Ext.History.getToken();

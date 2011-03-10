@@ -65,7 +65,6 @@ Pad.Portlet.DataView = Ext.extend(Ext.Panel, {
                 path: module.path,
             });
         }
-        console.log(pod);
         Pad.UI.TabPanel.add(pod);
     }
 });

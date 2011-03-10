@@ -1,0 +1,8 @@
+#!/usr/bin/env plackup -p 3030
+
+use Plack::App::Directory;
+sub {
+    my $env = shift;
+    $env->{PATH_INFO} = '/index.htm' if ( $env->{PATH_INFO} eq '/' );
+    return Plack::App::Directory->new( { root => "." } )->to_app->($env);
+}

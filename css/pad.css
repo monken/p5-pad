@@ -128,7 +128,7 @@
 .x-panel-resize {
         height:5px !important;
         border-top: 1px solid #A3BAE9 !important;
-        background:transparent url(/static/ux/panel-handle.gif) no-repeat center bottom;
+        background:transparent url(resources/ux/panel-handle.gif) no-repeat center bottom;
         position:relative;
         left:0;
         top:0px;
@@ -142,4 +142,25 @@
 
 .syntaxhighlighter {
     font-size: 12px !important;
+}
+
+.shortcut {
+    background: #333;
+    border-bottom-left-radius: 2px 2px;
+    border-bottom-left-radius: 2px 2px;
+    border-bottom-right-radius: 2px 2px;
+    border-bottom-right-radius: 2px 2px;
+    border-top-left-radius: 2px 2px;
+    border-top-left-radius: 2px 2px;
+    border-top-right-radius: 2px 2px;
+    border-top-right-radius: 2px 2px;
+    color: #EEE;
+    display: inline-block;
+    font-family: Monaco, 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+    margin: 0px;
+    min-width: 10px;
+    padding: 3px 6px;
+    text-align: center;
+    text-shadow: black 1px 1px 0px;
+    margin-right: 10px;
 }

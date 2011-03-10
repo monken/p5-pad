@@ -36,8 +36,8 @@ Pad.Mirrors = Ext.extend(Pad.Panel, {
     
     centerMap: function(grid, index, e) {
         var row = grid.getStore().getAt(index);
-        var loc = row.data.location.split(/,/);
-        var point = new GLatLng(loc[0], loc[1])
+        var loc = row.data.location;
+        var point = new GLatLng(loc[1], loc[0])
         this.map.getMap().setCenter(point, 8);
     },
     setMarkers: function(store, records) {
@@ -46,15 +46,19 @@ Pad.Mirrors = Ext.extend(Pad.Panel, {
         var blueIcon = new GIcon(G_DEFAULT_ICON);
         blueIcon.image = "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png";
         this.map.zoomLevel = 5;
+        
         this.map.addMarker(mePoint, {
             icon: blueIcon
-        }, true, true);
+        },true, true);
         for (var i = 0; i < records.length; i++) {
             var data = records[i].data;
-            var loc = data.location.split(/,/);
-            var point = new GLatLng(loc[0], loc[1])
+            var loc = data.location;
+            if(!loc) continue;
+            var point = new GLatLng(loc[1], loc[0]);
             this.map.addMarker(point);
         }
+        
+        
 
     },
 });
