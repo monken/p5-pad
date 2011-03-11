@@ -33,11 +33,13 @@
     <script type="text/javascript" src="js/lib/Pad/GridPanel.js"></script>
     <script type="text/javascript" src="js/lib/Pad/GridPanel/Mirror.js"></script>
     <script type="text/javascript" src="js/lib/Pad/GridPanel/Release.js"></script>
+    <script type="text/javascript" src="js/lib/Pad/GridPanel/Search.js"></script>
     <script type="text/javascript" src="js/lib/Pad/Panel.js"></script>
     <script type="text/javascript" src="js/lib/Pad/Panel/Author.js"></script>
     <script type="text/javascript" src="js/lib/Pad/Panel/Home.js"></script>
     <script type="text/javascript" src="js/lib/Pad/Panel/Mirrors.js"></script>
     <script type="text/javascript" src="js/lib/Pad/Panel/Recent.js"></script>
+    <script type="text/javascript" src="js/lib/Pad/Panel/Search.js"></script>
     <script type="text/javascript" src="js/lib/Pad/Portlet.js"></script>
     <script type="text/javascript" src="js/lib/Pad/Portlet/DataView.js"></script>
     <script type="text/javascript" src="js/lib/Pad/Portlet/ServerPortlet.js"></script>
@@ -61,5 +63,18 @@
 <form id="history-form" class="x-hidden" name="history-form">
       <input type="hidden" id="x-history-field"> <iframe id="x-history-frame"></iframe>
     </form>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-21976206-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
   </body>
 </html>

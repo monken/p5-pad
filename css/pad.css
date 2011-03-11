@@ -164,3 +164,11 @@
     text-shadow: black 1px 1px 0px;
     margin-right: 10px;
 }
+
+.pad-search-result strong {
+    color: #006699;
+    font-weight: bold;
+    font-size: 14px;
+    display: block;
+    padding-bottom: 8px
+}

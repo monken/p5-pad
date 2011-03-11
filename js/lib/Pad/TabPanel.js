@@ -5,7 +5,7 @@ Pad.TabPanel = Ext.extend(Ext.TabPanel, {
     id: 'pad-reader',
     enableTabScroll: true,
     //bbar:[{}],
-    activeItem: 0, 
+    //activeItem: 0, 
     plain: true,
     add: function(c) {
         var found;
@@ -62,5 +62,15 @@ new Ext.KeyMap(document, {
         if(tab.xtype == 'padhome') return;
         tab.fireEvent('close', tab);
         Pad.UI.TabPanel.remove(tab, true);
+    },
+});
+
+new Ext.KeyMap(document, {
+    key: Ext.EventObject.ESC,
+    ctrl: false,
+    shift: false,
+    alt: false,
+    fn: function(a, e) {
+        document.activeElement.blur()
     },
 });

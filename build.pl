@@ -26,7 +26,7 @@ while ( my $line = shift @file ) {
               $line );
     } elsif ($line =~ /maps.google.com\/maps/) {
         push( @out,
-'<script src="http://maps.google.com/maps?file=api&v=3.x&key=ABQIAAAAi2YyfW8defwbxJKgu7ewXBQ_gB-V_MtlUb_svvM7Brxc7FxRGBRDb_BOHqohNEjOO4X31cKBVgo6lg" type="text/javascript"></script>'
+'<script src="http://maps.google.com/maps?file=api&v=3.x&key=ABQIAAAAi2YyfW8defwbxJKgu7ewXBSQQqIkuzN5ydgl-J0sqxXy50Mx7hQdYjcfu7vR2PA-268PLFITA8c-pA" type="text/javascript"></script>'
         );
     } else {
         $line =~ s/-debug//;
@@ -44,6 +44,7 @@ system("cp -vR resources build/resources");
 
 while ( my $js = shift @js ) {
     system("cat $js >> build/tmp.js");
+    system("echo \"\n\" >> build/tmp.js");
 }
 
 system("yuicompressor -v --type js build/tmp.js >> build/min.js");
@@ -54,7 +55,9 @@ while ( my $css = shift @css ) {
 
 system("yuicompressor -v --type css build/tmp.css >> build/min.css");
 
-system("rm -v build/tmp.*");
+# system("rm -v build/tmp.*");
+
+system("echo 'pad.metacpan.org' > build/CNAME");
 
 print "Build was successful" . $/;
 print "Test with cd build && ../server" . $/;

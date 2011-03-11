@@ -10,11 +10,6 @@ Ext.onReady(function() {
             // console.log("init", token);
         }
     });
-    var hash = Ext.History.getToken();
-    if(!hash) return;
-    hash = hash.replace(/%23/g, "#");
-    var pages = hash.split(/#/);
-    for (var i = 0; i < pages.length; i++) {
-        Util.loadPage(pages[i]);
-    }
+    var hash = Ext.History.getToken() || '/home';
+    Util.loadPage(hash);
 });

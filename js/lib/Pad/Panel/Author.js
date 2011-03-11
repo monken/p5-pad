@@ -17,6 +17,7 @@ Pad.Author = Ext.extend(Pad.Panel, {
         border: false,
         xtype: 'padgridpanelrelease',
         api: { read: Release.byAuthor },
+        groupField: 'distribution',
     },
     initComponent: function() {
         var grid = Ext.ComponentMgr.create(this.grid);

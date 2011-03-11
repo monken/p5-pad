@@ -1,6 +1,8 @@
 Pad.GridPanel = Ext.extend(Ext.grid.GridPanel, {
     api: null,
     stripeRows: true,
+    viewConfig: {},
+    rowNumberer: true,
     store: {
         autoLoad: false,
         remoteSort: true,
@@ -33,8 +35,8 @@ Pad.GridPanel = Ext.extend(Ext.grid.GridPanel, {
             baseParams: { fields: this.fields }
         });
         this.store = new Ext.data.GroupingStore(this.store);
-        this.view = new Ext.grid.GroupingView();
-        if (this.cm[0].id != 'numberer') this.cm.unshift(new Ext.grid.RowNumberer({ width: 28 }));
+        this.view = new Ext.grid.GroupingView(this.viewConfig);
+        if (this.rowNumberer && this.cm[0].id != 'numberer') this.cm.unshift(new Ext.grid.RowNumberer({ width: 28 }));
         Ext.apply(this, {
             region: 'center',
             cm: new Ext.grid.ColumnModel(this.cm),

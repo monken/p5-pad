@@ -3,12 +3,18 @@ var Util = {
     loadPage: function(page) {
         var parts = page.split(/\//);
         parts.shift();
+        for(var i = 0; i < parts.length; i++) {
+            parts[i] = unescape(parts[i].replace(/\+/g, " "));
+        }
         if (parts[0] == 'mirrors') {
             Pad.UI.TabPanel.add(new Pad.Mirrors);
         } else if (parts[0] == 'recent') {
             Pad.UI.TabPanel.add(new Pad.Recent);
         } else if (parts[0] == 'home') {
             Pad.UI.TabPanel.add(new Pad.Home);
+        } else if (parts[0] == 'search') {
+            console.log(parts[1]);
+            Pad.UI.TabPanel.add(new Pad.Search({ query: parts[1] || '' }));
         } else if (parts[0] == 'pod' && parts.length > 3) {
             parts.shift();
             Pad.UI.TabPanel.add(new Pad.Reader.Pod({
@@ -65,6 +71,9 @@ var Util = {
     },
     urlRenderer: function(value) {
         return "<a href=\"/page/" + value + "\" target=\"_blank\">" + value + "</a>";
+    },
+    authorRenderer: function(value) {
+        return "<a href=\"#/author/" + value + "\">" + value + "</a>";
     },
     protocolRenderer: function(value, dom, res) {
         var pr = [];
