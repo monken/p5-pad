@@ -8,9 +8,9 @@ Pad.Author = Ext.extend(Pad.Panel, {
         region: 'north',
         xtype: 'panel',
         height: 200,
-        html: "Deine Mudder",
+        html: "TBD",
         border: false,
-        tbar: [{ text: 'Foo' }]
+        tbar: [{ text: 'Button' }]
     },
     grid: {
         region: 'center',
