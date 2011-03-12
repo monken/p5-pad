@@ -12,10 +12,14 @@ Pad.Recent = Ext.extend(Pad.Panel, {
         groupField: 'day',
     },
     initComponent: function() {
-        var grid = Ext.ComponentMgr.create(this.grid);
-        this.items = [grid],
+        this.grid = Ext.ComponentMgr.create(this.grid);
+        this.items = [this.grid],
         Pad.Recent.superclass.initComponent.call(this, arguments);
-    }
+    },
+    initEvents: function() {
+        this.grid.getStore().on('load', this.onLoad, this);
+        this.grid.getStore().on('beforeload', this.onBeforeLoad, this);
+    },
 });
 
 new Ext.KeyMap(document, {

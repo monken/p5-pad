@@ -7,13 +7,13 @@ Pad.GridPanel.Release = Ext.extend(Pad.GridPanel, {
     {
         header: "Release",
         width: 220,
-        sortable: true,
+        sortable: false,
         dataIndex: 'name',
         renderer: Ext.util.Format.htmlEncode
     },
     {
         header: "Abstract",
-        sortable: true,
+        sortable: false,
         dataIndex: 'abstract',
         id: 'abstract',
         renderer: Ext.util.Format.htmlEncode
@@ -21,13 +21,14 @@ Pad.GridPanel.Release = Ext.extend(Pad.GridPanel, {
     {
         header: "Distribution",
         hidden: true,
+        sortable: false,
         dataIndex: 'distribution',
         renderer: Ext.util.Format.htmlEncode
     },
     {
         header: "",
         width: 70,
-        sortable: true,
+        sortable: false,
         dataIndex: 'none',
         align: 'center',
         renderer: function(value, s,r) { return '<a href="' + r.data.download_url + '">Download</a>' }
@@ -35,14 +36,16 @@ Pad.GridPanel.Release = Ext.extend(Pad.GridPanel, {
     {
         header: "Date",
         hidden: true,
+        sortable: false,
         dataIndex: 'day',
         renderer: Ext.util.Format.dateRenderer("l, jS F Y")
     },
     {
         header: "Released",
         width: 120,
-        sortable: true,
+        sortable: false,
         dataIndex: 'date',
+        align: 'right',
         renderer: Util.dateTimeRenderer
     },
     ],

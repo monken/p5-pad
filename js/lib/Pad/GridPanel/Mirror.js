@@ -8,51 +8,51 @@ Pad.GridPanel.Mirror = Ext.extend(Pad.GridPanel, {
     cm: [{
         header: "Name",
         width: 100,
-        sortable: true,
+        sortable: false,
         dataIndex: 'name'
     },
     {
         header: "Organization",
         id: 'org',
-        sortable: true,
+        sortable: false,
         dataIndex: 'org'
     },
     {
         header: "City",
         width: 100,
-        sortable: true,
+        sortable: false,
         dataIndex: 'city'
     },
     {
         header: "Region",
         width: 100,
-        sortable: true,
+        sortable: false,
         dataIndex: 'region',
         hidden: true
     },
     {
         header: "Country",
         width: 100,
-        sortable: true,
+        sortable: false,
         dataIndex: 'country'
     },
     {
         header: "Continent",
         width: 100,
-        sortable: true,
+        sortable: false,
         dataIndex: 'continent'
     },
     {
         header: "Protocols",
         width: 90,
-        sortable: true,
+        sortable: false,
         dataIndex: 'none',
         renderer: Util.protocolRenderer
     },
     {
         header: "Distance",
         width: 70,
-        sortable: true,
+        sortable: false,
         dataIndex: 'distance',
         align: 'right',
         renderer: Util.distanceRenderer,
@@ -76,7 +76,7 @@ Pad.GridPanel.Mirror = Ext.extend(Pad.GridPanel, {
     {
         header: "Inception",
         width: 90,
-        sortable: true,
+        sortable: false,
         dataIndex: 'inceptdate',
         align: 'right',
         renderer: Util.dateRenderer

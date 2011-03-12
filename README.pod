@@ -2,7 +2,7 @@
 
 run the C<server> executable and access L<http://localhost:3030>.
 
-To build minified version run C<build.pl>. You can test the
+To build a minified version run C<build.pl>. You can test the
 minifed version by running C<server> from inside the C<build>
 folder:
 

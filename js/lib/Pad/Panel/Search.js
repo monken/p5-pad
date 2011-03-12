@@ -35,6 +35,7 @@ Pad.Search = Ext.extend(Pad.Panel, {
     },
     grid: {
         region: 'center',
+        autoLoad: false,
         border: false,
         xtype: 'padgridpanelsearch',
         api: {
@@ -45,16 +46,14 @@ Pad.Search = Ext.extend(Pad.Panel, {
         this.grid = Ext.ComponentMgr.create(this.grid);
         this.search = Ext.ComponentMgr.create(this.search);
         this.field = this.search.find('name', 'search')[0];
-        this.field.on('keyup', this.updateTitle, this);
-        this.field.on('specialkey', this.doSearch, this);
         this.items = [this.search, this.grid],
         this.grid.store.setBaseParam('author', this.title);
-        Pad.Author.superclass.initComponent.call(this, arguments);
+        Pad.Search.superclass.initComponent.call(this, arguments);
         if(this.query) {
             this.field.setValue(this.query);
             this.updateTitle();
             this.grid.getStore().setBaseParam('query', this.query);
-            this.grid.getStore().load();
+            this.grid.store.load();
         }
     },
     afterRender: function() {
@@ -68,6 +67,13 @@ Pad.Search = Ext.extend(Pad.Panel, {
         } else {
             this.setTitle("New Search");
         }
+    },
+    initEvents: function() {
+        this.grid.getStore().on('load', this.onLoad, this);
+        this.grid.getStore().on('beforeload', this.onBeforeLoad, this);
+        this.field.on('keyup', this.updateTitle, this);
+        this.field.on('specialkey', this.doSearch, this);
+        
     },
     doSearch: function(field, e) {
         this.updateTitle(field, e);

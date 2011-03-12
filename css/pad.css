@@ -172,3 +172,15 @@
     display: block;
     padding-bottom: 8px
 }
+
+.pad-author-img {
+    float: right;
+    border-radius: 8px;
+    -webkit-box-shadow: 2px 2px 5px #999;
+}
+
+
+.pad-author-overview td {
+    font-size: 12px;
+    padding: 5px
+}

@@ -4,7 +4,7 @@ Pad.GridPanel = Ext.extend(Ext.grid.GridPanel, {
     viewConfig: {},
     rowNumberer: true,
     store: {
-        autoLoad: false,
+        autoLoad: true,
         remoteSort: true,
         baseParams: {
             limit: 50
@@ -49,10 +49,6 @@ Pad.GridPanel = Ext.extend(Ext.grid.GridPanel, {
         });
         Pad.GridPanel.superclass.initComponent.call(this, arguments);
         this.initEvents();
-    },
-    onRender: function(c) {
-        Pad.GridPanel.superclass.onRender.call(this, c);
-        this.getStore().load();
     },
     initEvents: function() {
         this.store.on('load', this.onLoad, this);

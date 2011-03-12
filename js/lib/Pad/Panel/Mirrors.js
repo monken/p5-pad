@@ -27,13 +27,17 @@ Pad.Mirrors = Ext.extend(Pad.Panel, {
     },
     initComponent: function() {
         this.grid = Ext.ComponentMgr.create(this.grid);
-        this.grid.store.on('load', this.setMarkers, this);
-        this.grid.on('rowdblclick', this.centerMap, this);
         this.map = Ext.ComponentMgr.create(this.map);
         this.items = [this.map, this.grid],
         Pad.Author.superclass.initComponent.call(this, arguments);
     },
-    
+    initEvents: function() {
+        this.grid.getStore().on('load', this.onLoad, this);
+        this.grid.getStore().on('beforeload', this.onBeforeLoad, this);
+        this.grid.getStore().on('load', this.setMarkers, this);
+        this.grid.on('rowdblclick', this.centerMap, this);
+        
+    },
     centerMap: function(grid, index, e) {
         var row = grid.getStore().getAt(index);
         var loc = row.data.location;

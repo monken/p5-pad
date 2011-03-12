@@ -17,7 +17,7 @@ Pad.GridPanel.Search = Ext.extend(Pad.GridPanel, {
     cm: [
     {
         header: "Description",
-        sortable: true,
+        sortable: false,
         width: 220,
         id: 'name',
         dataIndex: 'module',
@@ -28,14 +28,14 @@ Pad.GridPanel.Search = Ext.extend(Pad.GridPanel, {
     {
         header: "Release",
         width: 160,
-        sortable: true,
+        sortable: false,
         dataIndex: 'release',
         renderer: Ext.util.Format.htmlEncode
     },
     {
         header: "Author",
         width: 80,
-        sortable: true,
+        sortable: false,
         dataIndex: 'author',
         renderer: Util.authorRenderer
     },
