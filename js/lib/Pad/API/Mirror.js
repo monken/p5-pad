@@ -1,9 +1,9 @@
 var Mirror = {
-    byLocation: function(param, cb, deep) {
-        if (!param.coords && !deep) {
+    byLocation: function(param, cb) {
+        if (!param.coords) {
             return Util.getLocation(function(pos) {
                 Ext.apply(param, pos);
-                Mirror.byLocation(param, cb, true);
+                Mirror.byLocation(param, cb);
             });
         }
 
