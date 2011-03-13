@@ -61,27 +61,34 @@ Module = {
     search: function(params, cb) {
         params.query = params.query.replace(/::/g, " ");
         var q = params.query.split(/ /);
+        var p = [];
         for (var i = 0; i < q.length; i++) {
-            q[i] = {
-                prefix: {
-                    name: q[i]
+
+            p[i] = {
+                field: {
+                    name: q[i] + '*',
                 }
             };
         }
-        q.push({
-            term: {
-                status: 'latest'
-            }
-        });
         Ext.Ajax.request({
             url: API.url + '/module/_search',
             jsonData: {
+                size: 20,
                 query: {
-                    match_all: {}
+                    custom_score: {
+                        query: {
+                            bool: {
+                                should: p
+                            }
+
+                        },
+                        "script": "_score / doc['name.raw'].stringValue.length()"
+                    }
                 },
-                sort: ['name.raw'],
                 filter: {
-                    and: q
+                    term: {
+                        status: 'latest'
+                    }
                 },
                 fields: ['name', 'release', 'author', 'file']
             },

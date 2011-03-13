@@ -14,6 +14,7 @@ Pad.CardPortlet = Ext.extend(Ext.Panel, {
         var found = this.find(this.identifier, c[this.identifier]);
         if (found && found[0]) {
             if(count) found[0].references++;
+            this.onLoad();
             return this.activate(found[0]);
         }
 
@@ -50,17 +51,12 @@ Pad.CardPortlet = Ext.extend(Ext.Panel, {
         });
     },
     onBeforeLoad: function(node) {
-        this.oldIconCls = this.iconCls;
+        if(this.iconCls != 'silk-loading')
+            this.oldIconCls = this.iconCls;
         this.setIconClass('silk-loading');
     },
     onLoad: function(ev) {
         this.setIconClass(this.oldIconCls);
-        var c = this.layout.activeItem;
-        var found = this.find(this.identifier, c[this.identifier]);
-        if(found.length > 1) {
-            found[found.length-1].destroy();
-            this.activate(found[0]);
-        }
     },
     onException: function(proxy, type, action, options) {
         console.log(proxy, type, action, options);

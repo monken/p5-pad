@@ -10,6 +10,7 @@ Pad.RelatedPanel.Accordion = Ext.extend(Ext.Panel, {
     layout: 'accordion',
     xtype: 'related',
     references: 0,
+    loaded: false,
     initComponent: function() {
         this.items = [{
             xtype: 'padportletdataview',
@@ -17,16 +18,30 @@ Pad.RelatedPanel.Accordion = Ext.extend(Ext.Panel, {
             release: this.release,
             author: this.author,
             api: Release.documentation,
+            listeners: {
+                load: this.onLoad.createDelegate(this)
+            }
         },
         {
             xtype: 'padportletdataview',
             title: 'Dependencies',
             release: this.release,
             author: this.author,
-            api: Release.dependencies
+            api: Release.dependencies,
+            listeners: {
+                load: this.onLoad.createDelegate(this)
+            }
 
         }];
+        this.addEvents('load');
         Pad.RelatedPanel.Accordion.superclass.initComponent.call(this, arguments);
+    },
+    onLoad: function() {
+        var loaded = true;
+        this.items.each(function(c) {
+            if(!c.loaded) loaded = false;
+        });
+        if(loaded) this.fireEvent('load');
     }
 
 });

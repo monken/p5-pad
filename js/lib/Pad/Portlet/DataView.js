@@ -1,6 +1,7 @@
 Pad.Portlet.DataView = Ext.extend(Pad.Panel, {
     references: 0,
     autoScroll: true,
+    loaded: false,
     view: {
         singleSelect: true,
         overClass: 'pad-related-item-selected',
@@ -30,7 +31,13 @@ Pad.Portlet.DataView = Ext.extend(Pad.Panel, {
         },
         this.view));
         this.view.on('click', this.onClick);
-        this.relayEvents(this.store.proxy, ['load', 'beforeload', 'exception']);
+        this.store.on('load', this.onLoad, this);
+        this.addEvents('load');
+        this.relayEvents(this.store.proxy, ['beforeload', 'exception']);
+    },
+    onLoad: function() {
+        this.loaded = true;
+        this.fireEvent('load');
     },
     afterRender: function() {
         Pad.Portlet.DataView.superclass.afterRender.call(this, arguments);
