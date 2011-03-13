@@ -13,7 +13,8 @@ Pad.Panel = Ext.extend(Ext.Panel, {
     initEvents: function() {},
     onBeforeLoad: function() {
         this.loaded = false;
-        this.oldIconCls = this.iconCls;
+        if(this.iconCls != 'silk-loading')
+          this.oldIconCls = this.iconCls;
         this.setIconClass('silk-loading');
     },
     onLoad: function(ev) {

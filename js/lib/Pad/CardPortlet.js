@@ -4,9 +4,7 @@ Pad.CardPortlet = Ext.extend(Ext.Panel, {
     layout: 'card',
     cls: 'x-portlet',
     height: 200,
-    title: 'Browser',
     activeItem: 0,
-    iconCls: 'silk-bricks',
     anchor: '100%',
     frame: true,
     identifier: 'distribution',
@@ -36,7 +34,6 @@ Pad.CardPortlet = Ext.extend(Ext.Panel, {
         return Pad.CardPortlet.superclass.remove.call(this, found[0]);
     },
     activate: function(c) {
-        //this.setTitle(c.distribution);
         if (this.rendered) this.layout.setActiveItem(c);
     },
     initComponent: function() {

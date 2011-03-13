@@ -1,4 +1,4 @@
-Pad.Portlet.DataView = Ext.extend(Ext.Panel, {
+Pad.Portlet.DataView = Ext.extend(Pad.Panel, {
     references: 0,
     autoScroll: true,
     view: {

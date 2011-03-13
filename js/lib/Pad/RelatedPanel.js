@@ -9,6 +9,7 @@ Pad.RelatedPanel = Ext.extend(Pad.CardPortlet, {
 Pad.RelatedPanel.Accordion = Ext.extend(Ext.Panel, {
     layout: 'accordion',
     xtype: 'related',
+    references: 0,
     initComponent: function() {
         this.items = [{
             xtype: 'padportletdataview',
@@ -16,7 +17,6 @@ Pad.RelatedPanel.Accordion = Ext.extend(Ext.Panel, {
             release: this.release,
             author: this.author,
             api: Release.documentation,
-            
         },
         {
             xtype: 'padportletdataview',

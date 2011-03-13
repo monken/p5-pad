@@ -35,6 +35,9 @@ Pad.Reader = Ext.extend(Pad.Panel, {
     },
     onActivate: function(tab, newtab, oldtab) {
         this.body.scrollTo('top', this.scrollCache.top);
+        Pad.UI.FilesPanel.add({author: this.author, release: this.release, xtype: 'padfiles' }, false);
+        Pad.UI.RelatedPanel.add({author: this.author, release: this.release, xtype: 'padrelated' }, false);
+        
     },
     onRender: function(tab) {
         Pad.Reader.superclass.onRender.call(this, tab);
@@ -47,6 +50,9 @@ Pad.Reader = Ext.extend(Pad.Panel, {
             Ext.copyTo(this, res, ['path', 'release', 'author', 'module']);
             Ext.fly(this.ownerCt.getTabEl(this)).child('span.x-tab-strip-text', true).qtip = [this.author, this.release, this.path].join("/");
             this.setTitle(this.module || this.path);
+            Pad.UI.FilesPanel.add({author: this.author, release: this.release, xtype: 'padfiles' }, true);
+            Pad.UI.RelatedPanel.add({author: this.author, release: this.release, xtype: 'padrelated' }, true);
+            
         } else {
             this.path = this.title;
             this.body.update('Not Found');

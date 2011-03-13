@@ -52,7 +52,6 @@ Pad.Author = Ext.extend(Pad.Panel, {
             rels += terms[i].count;
         }
         var schwartz = terms.length/rels;
-        console.log(this.title);
         Ext.get("pad-author-schwartz-" + this.title).dom.innerHTML = Ext.util.Format.number(schwartz, '0.0000');
     },
     initEvents: function() {

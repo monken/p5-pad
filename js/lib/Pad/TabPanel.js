@@ -26,15 +26,6 @@ Pad.TabPanel = Ext.extend(Ext.TabPanel, {
             Pad.UI.RelatedPanel.remove(tab);
         });
         if(this.rendered) this.activate(c);
-        this.loadPortlets(Ext.isArray(c) ? c[0] : c, Ext.isArray(c) ? false : true);
-    },
-    loadPortlets: function(c, count) {
-        if(c.loaded) {
-            Pad.UI.FilesPanel.add({author: c.author, release: c.release, xtype: 'padfiles' }, count);
-            Pad.UI.RelatedPanel.add({author: c.author, release: c.release, xtype: 'padrelated' }, count);
-        } else {
-            c.on('load', this.loadPortlets.createDelegate(this, [c, count]));
-        }
     },
     initEvents: function() {
         Pad.TabPanel.superclass.initEvents.call(this, arguments);
@@ -42,7 +33,6 @@ Pad.TabPanel = Ext.extend(Ext.TabPanel, {
         this.on('close', this.onClose);
     },
     onTabChange: function(panel, c) {
-        if(c) this.loadPortlets(c);
         c.setToken();
     },
     proxyLink: function(link) {
